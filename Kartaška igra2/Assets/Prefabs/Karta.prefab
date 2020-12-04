@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 1388218056349210214}
   - component: {fileID: 3345291079498576190}
   - component: {fileID: 6530902277127707526}
+  - component: {fileID: 286918945977928783}
   m_Layer: 0
-  m_Name: Card
+  m_Name: Karta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d112632aca59cd4449b208dcb5f0fe5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardFace: {fileID: 0}
-  cardBack: {fileID: 21300000, guid: bb1374b0228e37d4e80a6a7046c91ad8, type: 3}
+  KarteIzgled: {fileID: 0}
+  KartePrefab: {fileID: 0}
 --- !u!114 &6530902277127707526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,4 +110,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d0d9d019309034ab53d2bf21c114ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faceUp: 0
+  KartaOkrenutaPremaGore: 0
+--- !u!114 &286918945977928783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388218056349210213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873881f96fae2ea489f86eb7bb43306d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OdigranoPozicija1: {fileID: 0}
+  BojaKarte: 
+  NazivKarte: 
+  RangKarte: 0
+  VrijednostKarte: 0
+  Adut: 0
+  PrviNaRedu: 1

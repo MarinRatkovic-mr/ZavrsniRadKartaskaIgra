@@ -5,148 +5,154 @@ using UnityEngine;
 
 public class Bela : MonoBehaviour
 {
-    public Sprite[] cardFaces;
-    public GameObject cardPrefab;
+    public Sprite[] KarteIzgled;
+    public GameObject KartePrefab;
 
-    //Pravananje po igračima
-    public GameObject[] PlayersHandPos;
-    public GameObject[] PlayersPlayedPos;
+    //Poravnanje karata prema pozicijama igrača tjekom djeljenja
+    public GameObject[] PozicijaIgraca;
+    public GameObject[] PozicijaIgracaOdigrano;
 
-    public static string[] suits = new string[] {"Zelje","Srce","Tikva","Zir" };
-    public static string[] values = new string[] { "7", "8", "9", "10","Decko","Baba","Kralj","As" };
+    public static string[] boje = new string[] {"Zel","Src","Tik","Zir" };
+    public static string[] vrijednosti = new string[] { "7", "8", "9", "10","Decko","Baba","Kralj","As" };
 
-    public List<string>[] playersHand;
-    public List<string>[] playersPlayed;
+    public List<string>[] Igraci;
+    public List<string>[] IgraciOdigrano;
 
-    private List<string> playersHand1 = new List<string>();
-    private List<string> playersHand2 = new List<string>();
-    private List<string> playersHand3 = new List<string>();
-    private List<string> playersHand4 = new List<string>();
+    private List<string> Igrac1 = new List<string>();
+    private List<string> Igrac2 = new List<string>();
+    private List<string> Igrac3 = new List<string>();
+    private List<string> Igrac4 = new List<string>();
 
-    public List<string> deck;
-    // Start is called before the first frame update
+    public List<string> spil;
+    
     void Start()
     {
-        playersHand = new List<string>[] { playersHand1, playersHand2, playersHand3, playersHand4 };
+        //Stvaranje igrača pri početku igre
+        Igraci = new List<string>[] { Igrac1, Igrac2, Igrac3, Igrac4 };
         PlayCards();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
     }
-
+    // Metoda za prizvanje promješanog špila karata
     public void PlayCards()
     {
-
-        deck = GenerateDeck();
-        Shuffle(deck);
+        spil = KreirajSpil();
+        PromjesajKarte(spil);
         //test the cards in the deck
-        foreach(string card in deck)
+        foreach(string karta in spil)
         {
-            print(card);
+            print(karta);
         }
-        BelaSort();
-        StartCoroutine(BelaDeal());
+        BelaSortiraj();
+        StartCoroutine(BelaDjeli());
     }
 
-    public static List<string> GenerateDeck()
+    //Kreiranje špila karata tako da uzmemo sve vrijednosti iz vektora "boje" i "vrijednosti"
+    //Te ih spojimo zajedno da se stvori sve kombinacije iz ta dva vektora
+    public static List<string> KreirajSpil()
     {
-        List<string> newDeck = new List<string>();
-        foreach(string s in suits)
+        List<string> NoviSpil = new List<string>();
+        foreach(string s in boje)
         {
-            foreach ( string v in values)
+            foreach ( string v in vrijednosti)
             {
-                newDeck.Add(s + v);
+                NoviSpil.Add(s + v);
             }
         }
 
-        return newDeck;
+        return NoviSpil;
     }
 
-    void Shuffle<T>(List<T> list)
+    //Metoda koja će promiješati sve karte u špilu
+    void PromjesajKarte<T>(List<T> listKarata)
     {
         System.Random random = new System.Random();
-        int n = list.Count;
+        int n = listKarata.Count;
         while (n > 1)
         {
             int k = random.Next(n);
             n--;
-            T temp = list[k];
-            list[k] = list[n];
-            list[n] = temp;
+            T temp = listKarata[k];
+            listKarata[k] = listKarata[n];
+            listKarata[n] = temp;
         }
 
     }
-    IEnumerator BelaDeal()
+    //Metoda koja dodjeljuje izmješane karte igračima gdje je igrač 1 koji je korisnik igre
+    //Postavlja karte na stol tako da samo igrač 1 vidi prvih 6 karata a ostale ne
+    //Usmjeruje karte pri podjeli u pravim pravcima 
+    IEnumerator BelaDjeli()
     {
-       for(int i=0;i<4;i++) 
-       { 
-
         
-        float yOffset = 0;
-        float zOffset = 0;
-        float xOffset = 0;
-        foreach(string card in playersHand[i])
+        for (int i = 0; i < 4; i++) {
+            
+            float zAngle = 0f;
+
+            float yOffset = 0;
+            float zOffset = 0;
+            float xOffset = 0;
+        foreach(string karta in Igraci[i])
         {
                 
-                yield return new WaitForSeconds(0.05f);
-            GameObject newCard = Instantiate(cardPrefab,new Vector3(PlayersHandPos[i].
-                transform.position.x -xOffset, PlayersHandPos[i].transform.position.y - yOffset, 
-                PlayersHandPos[i].transform.position.z - zOffset), Quaternion.identity, 
-                PlayersHandPos[i].transform);
-            newCard.name = card;
-               for(int a = 0; a < 6; a++) { 
-                  if(card == playersHand1[a]) 
+                    yield return new WaitForSeconds(0.06f);
+            GameObject novaKarta = Instantiate(KartePrefab,new Vector3(PozicijaIgraca[i].transform.position.x -xOffset, PozicijaIgraca[i].transform.position.y - yOffset,PozicijaIgraca[i].transform.position.z + zOffset), Quaternion.Euler(0f, 0f, PozicijaIgraca[i].transform.localRotation.z +zAngle),PozicijaIgraca[i].transform);
+                
+                novaKarta.name = karta;
+                
+
+                for (int a = 0; a < 6; a++) 
+                { 
+                  if(karta == Igrac1[a]) 
                   { 
                     
-                     newCard.GetComponent<Selectable>().faceUp = true;
+                     novaKarta.GetComponent<Selectable>().KartaOkrenutaPremaGore = true;
                   }
                 }
-               for(int b = 0; b < 8; b++) { 
-                   if(card == playersHand1[b])
+
+               for(int b = 0; b < 8; b++) 
+               {
+                    
+                    if (karta == Igrac1[b])
                    {
+                        
                         zOffset = zOffset + 0.03f;
                         xOffset = xOffset - 2f;
+                        zAngle = 0f;
+
                     }
-                else if(card == playersHand2[b])
-                    {
+                     if(karta == Igrac2[b])
+                     {
+                        
+                        zAngle =  90f;
                         zOffset = zOffset + 0.03f;
-                        yOffset = yOffset + 1.5f;
-                    }
-                    else if (card == playersHand3[b])
+                        yOffset = yOffset + 1.5f;                                                
+                        
+                     }
+                    else if (karta == Igrac3[b])
                     {
                         zOffset = zOffset + 0.03f;
                         xOffset = xOffset + 2f;
+                        zAngle = 0;
                     }
-                    else if(card == playersHand4[b])
+                    else if(karta == Igrac4[b])
                     {
+                        zAngle = 90f;
                         zOffset = zOffset + 0.03f;
                         yOffset = yOffset - 1.5f;
                     }
-                }
+               }
                 
-                /*
-                zOffset = zOffset + 0.03f;
-                xOffset = xOffset - 2f;
-                */
-            }
-       }
+               
+        }
+      }
     }
 
-    void BelaSort()
+    void BelaSortiraj()
     {
-        /*
-        for (int i=0;i<4;i++)
-        {
-            for (int j= i; j < 4; j++)
-            {
-                playersHand[j].Add(deck.Last<string>());
-                deck.RemoveAt(deck.Count - 1);
-            }
-        }
-        */
         int a = 0;
 
         while (a < 32) { 
@@ -154,8 +160,8 @@ public class Bela : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 a++;
-                playersHand[i].Add(deck.Last<string>());
-                deck.RemoveAt(deck.Count -1);
+                Igraci[i].Add(spil.Last<string>());
+                spil.RemoveAt(spil.Count -1);
                 
             }
        }

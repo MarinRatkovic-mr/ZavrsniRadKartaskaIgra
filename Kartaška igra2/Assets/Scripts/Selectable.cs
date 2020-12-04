@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Selectable : MonoBehaviour
 {
-    public bool faceUp = false;
+    public bool KartaOkrenutaPremaGore = false;
     // Start is called before the first frame update
     void Start()
     {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UpdateSprite : MonoBehaviour
 {
-    public Sprite cardFace;
-    public Sprite cardBack;
+    public Sprite KarteIzgled;
+    public Sprite KartePrefab;
 
     private SpriteRenderer spriteRenderer;
     private Selectable selectable;
@@ -15,7 +15,7 @@ public class UpdateSprite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<string> deck = Bela.GenerateDeck();
+        List<string> deck = Bela.KreirajSpil();
         bela = FindObjectOfType<Bela>();
 
         int i = 0;
@@ -23,7 +23,7 @@ public class UpdateSprite : MonoBehaviour
         {
             if (this.name ==card)
             {
-                cardFace = bela.cardFaces[i];
+                KarteIzgled = bela.KarteIzgled[i];
                 break;
             }
             i++;
@@ -35,13 +35,13 @@ public class UpdateSprite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (selectable.faceUp == true)
+        if (selectable.KartaOkrenutaPremaGore == true)
         {
-            spriteRenderer.sprite = cardFace;
+            spriteRenderer.sprite = KarteIzgled;
         }
         else
         {
-            spriteRenderer.sprite = cardBack;
+            spriteRenderer.sprite = KartePrefab;
         }
     }
 }

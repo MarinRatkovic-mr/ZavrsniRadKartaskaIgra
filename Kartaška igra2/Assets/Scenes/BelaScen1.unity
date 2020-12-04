@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 78914887}
   m_Layer: 0
-  m_Name: PlayersHandPos
+  m_Name: PozicijaIgraca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,6 +165,8 @@ GameObject:
   m_Component:
   - component: {fileID: 271092956}
   - component: {fileID: 271092955}
+  - component: {fileID: 271092958}
+  - component: {fileID: 271092957}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -236,6 +238,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!61 &271092957
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271092954}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 36.010002, y: 54.028194}
+    newSize: {x: 36.010002, y: 54.010002}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 36.010002, y: 54.028194}
+  m_EdgeRadius: 0
+--- !u!50 &271092958
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271092954}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &624989116
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d914a5321fe6bbe46baa84df2b9938f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OdigranoPozicija1: {fileID: 1687434301}
 --- !u!114 &711177999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b79befa00387d449033f95b616cf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardFaces:
+  KarteIzgled:
   - {fileID: 21300000, guid: 705a1847b6efe5e419cc40a4ca70d791, type: 3}
   - {fileID: 21300000, guid: 81d60bf96d809fb4bb3450c2890c2c0c, type: 3}
   - {fileID: 21300000, guid: dc24128f6781cc144a82614571ff7524, type: 3}
@@ -445,24 +495,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 85a0073d9fcd8f340bcb6f68391b1aa6, type: 3}
   - {fileID: 21300000, guid: 85b3bab8a4289104bbc750d5d17541bc, type: 3}
   - {fileID: 21300000, guid: 5216a26b1c6ca3c409db1c98372e8215, type: 3}
-  - {fileID: 21300000, guid: 7af8130ed4ad34644af1b245b99d76a8, type: 3}
+  - {fileID: 21300000, guid: 4380594289885b049bf9b8d194548765, type: 3}
   - {fileID: 21300000, guid: 4d2a7ad888c61a346931f121699b3629, type: 3}
   - {fileID: 21300000, guid: fd27ba6a4f5bb3145a00a5173172760c, type: 3}
   - {fileID: 21300000, guid: c416b7a7a2ca38748ada177070c9d062, type: 3}
-  cardPrefab: {fileID: 1388218056349210213, guid: cb8a684c24bc9d14789fa21a693b5372,
-    type: 3}
-  PlayersHandPos:
+  KartePrefab: {fileID: 891520613}
+  PozicijaIgraca:
   - {fileID: 1408921405}
   - {fileID: 1317706853}
   - {fileID: 1640627616}
   - {fileID: 1456819500}
-  PlayersPlayedPos:
+  PozicijaIgracaOdigrano:
   - {fileID: 1687434300}
   - {fileID: 1079757623}
   - {fileID: 802804458}
   - {fileID: 904708262}
-  deck:
-  - 
+  spil: []
 --- !u!4 &711178000
 Transform:
   m_ObjectHideFlags: 0
@@ -487,9 +535,11 @@ GameObject:
   m_Component:
   - component: {fileID: 802804459}
   - component: {fileID: 802804460}
+  - component: {fileID: 802804462}
+  - component: {fileID: 802804461}
   m_Layer: 0
-  m_Name: PlayersPlayed3
-  m_TagString: Untagged
+  m_Name: OdigranoPozicija3
+  m_TagString: PozicijaIgracaOdigrano
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -558,6 +608,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &802804461
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802804458}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &802804462
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802804458}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
 --- !u!1 &879974487
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +727,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879974487}
   m_CullTransparentMesh: 0
+--- !u!1 &891520613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1388218056349210213, guid: cb8a684c24bc9d14789fa21a693b5372,
+    type: 3}
+  m_PrefabInstance: {fileID: 1388218057459190284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &891520618
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891520613}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.34, y: 2.11}
+    newSize: {x: 1.33, y: 2.11}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.34, y: 2.11}
+  m_EdgeRadius: 0
+--- !u!50 &891520619
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891520613}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &904708262
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,9 +790,11 @@ GameObject:
   m_Component:
   - component: {fileID: 904708263}
   - component: {fileID: 904708264}
+  - component: {fileID: 904708266}
+  - component: {fileID: 904708265}
   m_Layer: 0
-  m_Name: PlayersPlayed4
-  m_TagString: Untagged
+  m_Name: ODigranoPozicija4
+  m_TagString: PozicijaIgracaOdigrano
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -711,6 +863,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &904708265
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904708262}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &904708266
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904708262}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
 --- !u!1 &929168155
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 929168156}
   m_Layer: 0
-  m_Name: Deck
+  m_Name: Spil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -834,9 +1033,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1079757624}
   - component: {fileID: 1079757625}
+  - component: {fileID: 1079757627}
+  - component: {fileID: 1079757626}
   m_Layer: 0
-  m_Name: PlayersPlayed2
-  m_TagString: Untagged
+  m_Name: OdigranoPozicija2
+  m_TagString: PozicijaIgracaOdigrano
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -905,6 +1106,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1079757626
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079757623}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1079757627
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079757623}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
 --- !u!1 &1233319577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1258623951}
   m_Layer: 0
-  m_Name: PlayersPlayedPos
+  m_Name: PozicijaIgracaOdigrano
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1417,9 +1665,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1317706854}
   - component: {fileID: 1317706855}
+  - component: {fileID: 1317706857}
+  - component: {fileID: 1317706856}
   m_Layer: 0
-  m_Name: Player2
-  m_TagString: Untagged
+  m_Name: Igrac2
+  m_TagString: PozicijaIgraca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1432,8 +1682,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317706853}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -40.65, y: 25.725, z: 41.901222}
-  m_LocalScale: {x: 2.3, y: 2.5, z: 2.5}
+  m_LocalPosition: {x: -38.7, y: 25.725, z: 41.901222}
+  m_LocalScale: {x: 1.8, y: 2, z: 2.5}
   m_Children: []
   m_Father: {fileID: 78914887}
   m_RootOrder: 1
@@ -1488,6 +1738,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1317706856
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317706853}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
+--- !u!50 &1317706857
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317706853}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1384391307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,9 +1969,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1408921406}
   - component: {fileID: 1408921407}
+  - component: {fileID: 1408921409}
+  - component: {fileID: 1408921408}
   m_Layer: 0
-  m_Name: Player1
-  m_TagString: Untagged
+  m_Name: Igrac1
+  m_TagString: Igrac1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1688,7 +1987,7 @@ Transform:
   m_GameObject: {fileID: 1408921405}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -20.5, y: -12, z: 41.901222}
-  m_LocalScale: {x: 2.3, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 3.3, y: 3, z: 2.5}
   m_Children: []
   m_Father: {fileID: 78914887}
   m_RootOrder: 0
@@ -1711,7 +2010,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1743,6 +2042,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1408921408
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408921405}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
+--- !u!50 &1408921409
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408921405}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1456819500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,9 +2099,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1456819501}
   - component: {fileID: 1456819502}
+  - component: {fileID: 1456819504}
+  - component: {fileID: 1456819503}
   m_Layer: 0
-  m_Name: Player4
-  m_TagString: Untagged
+  m_Name: Igrac4
+  m_TagString: PozicijaIgraca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1768,8 +2116,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456819500}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 42.8, y: -1.82, z: 41.901222}
-  m_LocalScale: {x: 2.3, y: 2.5, z: 0}
+  m_LocalPosition: {x: 42.5, y: -1.82, z: 41.901222}
+  m_LocalScale: {x: 1.8, y: 2, z: 0}
   m_Children: []
   m_Father: {fileID: 78914887}
   m_RootOrder: 3
@@ -1824,6 +2172,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1456819503
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456819500}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
+--- !u!50 &1456819504
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456819500}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1474826833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,9 +2301,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1640627617}
   - component: {fileID: 1640627618}
+  - component: {fileID: 1640627620}
+  - component: {fileID: 1640627619}
   m_Layer: 0
-  m_Name: Player3
-  m_TagString: Untagged
+  m_Name: Igrac3
+  m_TagString: PozicijaIgraca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1921,8 +2318,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640627616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.654457, y: 34.256447, z: 41.901222}
-  m_LocalScale: {x: 2.3, y: 2.5, z: 2.5}
+  m_LocalPosition: {x: 25.654457, y: 33, z: 41.901222}
+  m_LocalScale: {x: 1.8, y: 2, z: 2.5}
   m_Children: []
   m_Father: {fileID: 78914887}
   m_RootOrder: 2
@@ -1977,6 +2374,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1640627619
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640627616}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
+--- !u!50 &1640627620
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640627616}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1687434300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,9 +2431,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1687434301}
   - component: {fileID: 1687434302}
+  - component: {fileID: 1687434304}
+  - component: {fileID: 1687434303}
   m_Layer: 0
-  m_Name: PlayersPlayed1
-  m_TagString: Untagged
+  m_Name: OdigranoPozicija1
+  m_TagString: PozicijaIgracaOdigrano
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2002,8 +2448,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687434300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.375, y: 70.100006, z: 411.64062}
-  m_LocalScale: {x: 2.3, y: 2.5, z: 2.5}
+  m_LocalPosition: {x: -8.4, y: 70.58, z: 411.64062}
+  m_LocalScale: {x: 2.947749, y: 2.7315, z: 2.5}
   m_Children: []
   m_Father: {fileID: 1258623951}
   m_RootOrder: 0
@@ -2058,6 +2504,83 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1687434303
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687434300}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1687434304
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687434300}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.01, y: 1.3}
+    newSize: {x: 1.01, y: 1.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.3}
+  m_EdgeRadius: 0
+--- !u!1 &1804416682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804416683}
+  m_Layer: 0
+  m_Name: ZoviAdut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1804416683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804416682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.2249205, y: 1.2868235, z: -10.127475}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2055768874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,20 +2744,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: OdigranoPozicija1
+      value: 
+      objectReference: {fileID: 1687434300}
     - target: {fileID: 1388218056349210213, guid: cb8a684c24bc9d14789fa21a693b5372,
         type: 3}
       propertyPath: m_Name
-      value: Card
+      value: Karta
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388218056349210213, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: m_TagString
+      value: Karta
       objectReference: {fileID: 0}
     - target: {fileID: 1388218056349210215, guid: cb8a684c24bc9d14789fa21a693b5372,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.72
+      value: -24.71
       objectReference: {fileID: 0}
     - target: {fileID: 1388218056349210215, guid: cb8a684c24bc9d14789fa21a693b5372,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.48
+      value: 8.22
       objectReference: {fileID: 0}
     - target: {fileID: 1388218056349210215, guid: cb8a684c24bc9d14789fa21a693b5372,
         type: 3}
@@ -2281,5 +2814,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3345291079498576190, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: KartePrefab
+      value: 
+      objectReference: {fileID: 21300000, guid: bb1374b0228e37d4e80a6a7046c91ad8,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb8a684c24bc9d14789fa21a693b5372, type: 3}
