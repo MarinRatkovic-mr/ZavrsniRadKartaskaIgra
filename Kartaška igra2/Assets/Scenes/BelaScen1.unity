@@ -495,7 +495,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 85a0073d9fcd8f340bcb6f68391b1aa6, type: 3}
   - {fileID: 21300000, guid: 85b3bab8a4289104bbc750d5d17541bc, type: 3}
   - {fileID: 21300000, guid: 5216a26b1c6ca3c409db1c98372e8215, type: 3}
-  - {fileID: 21300000, guid: 4380594289885b049bf9b8d194548765, type: 3}
+  - {fileID: 21300000, guid: 7af8130ed4ad34644af1b245b99d76a8, type: 3}
   - {fileID: 21300000, guid: 4d2a7ad888c61a346931f121699b3629, type: 3}
   - {fileID: 21300000, guid: fd27ba6a4f5bb3145a00a5173172760c, type: 3}
   - {fileID: 21300000, guid: c416b7a7a2ca38748ada177070c9d062, type: 3}
@@ -2749,6 +2749,36 @@ PrefabInstance:
       propertyPath: OdigranoPozicija1
       value: 
       objectReference: {fileID: 1687434300}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: Igrac2
+      value: 
+      objectReference: {fileID: 1317706853}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: Igrac3
+      value: 
+      objectReference: {fileID: 1640627616}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: Igrac4
+      value: 
+      objectReference: {fileID: 1456819500}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: OdigranoPozicija2
+      value: 
+      objectReference: {fileID: 1079757623}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: OdigranoPozicija3
+      value: 
+      objectReference: {fileID: 802804458}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: OdigranoPozicija4
+      value: 
+      objectReference: {fileID: 904708262}
     - target: {fileID: 1388218056349210213, guid: cb8a684c24bc9d14789fa21a693b5372,
         type: 3}
       propertyPath: m_Name

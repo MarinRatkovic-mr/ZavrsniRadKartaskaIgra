@@ -42,11 +42,16 @@ public class Bela : MonoBehaviour
     {
         spil = KreirajSpil();
         PromjesajKarte(spil);
-        //test the cards in the deck
+        //Testiraj tako da isprintaš karte na konzolu
+        
+       /* 
         foreach(string karta in spil)
         {
             print(karta);
+       
+        
         }
+       */
         BelaSortiraj();
         StartCoroutine(BelaDjeli());
     }
