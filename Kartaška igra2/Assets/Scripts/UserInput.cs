@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserInput : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class UserInput : MonoBehaviour
     private int brojacKlikova = 1;
     private GameObject Odabrano1;
     private GameObject Odabrano2;
+    
+
     
     // Start is called before the first frame update
     void Start()
@@ -27,7 +30,7 @@ public class UserInput : MonoBehaviour
     void KartaOdabrana()
     {
         
-        Vector3 pozicijaMisa = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
+       // Vector3 pozicijaMisa = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
         RaycastHit2D odabrano = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
       
         if (Input.GetMouseButtonDown(0))
@@ -72,6 +75,8 @@ public class UserInput : MonoBehaviour
             return;
         }       
     }
+
+  
 
     
 
