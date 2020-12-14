@@ -39,8 +39,8 @@ public class Ai : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();       
-
+        OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();
+        OdluciKojiIgracJeNaReduITajIgracIgra(PocistiPlocuIDajKartePobjedniku());
 
     }
     public void AiIgracIgraSamPrvu(GameObject IgracKojiIgra)
@@ -53,10 +53,12 @@ public class Ai : MonoBehaviour
             GameObject NajmanjaKarta = null;
             GameObject NajveciAdut = null;
             GameObject NajmanjiAdut = null;
-            string ZadnjeSlovoIgracaIPozicije = IgracKojiIgra.name.Substring(IgracKojiIgra.name.Length - 1);
+            string ImePozicije = "OdigranoPozicija" + IgracKojiIgra.name.Substring(IgracKojiIgra.name.Length - 1);
             if (IgracKojiIgra != null)
             {
-                PozicijaNaKojuIgracOdigra.name.Replace(PozicijaNaKojuIgracOdigra.name, "OdigranoPozicija" + ZadnjeSlovoIgracaIPozicije);
+                PozicijaNaKojuIgracOdigra = GameObject.Find(ImePozicije);
+                print("Ime pozicije koja se trenutno igra:" + ImePozicije);
+                
             }
             for (int i=0;i< IgracKojiIgra.transform.childCount; i++)
             {
@@ -188,7 +190,7 @@ public class Ai : MonoBehaviour
         }
     }
 
-   public void OdluciKojiIgracJeNaRedu(GameObject IgracNaRedu)
+   public void OdluciKojiIgracJeNaReduITajIgracIgra(GameObject IgracNaRedu)
     {
         
         if (IgracNaRedu == Igrac2)
@@ -442,6 +444,11 @@ public class Ai : MonoBehaviour
                 }
             }
 
+        }
+        else if( OdigranoPozicija4.transform.childCount == 1)
+        {
+            UserInput IgraIgrac = Igrac1.GetComponent<UserInput>();
+            IgraIgrac.KartaOdabrana();
         }
     }
 

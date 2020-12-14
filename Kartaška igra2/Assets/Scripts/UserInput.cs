@@ -27,7 +27,7 @@ public class UserInput : MonoBehaviour
 /*Ako karta na koju kliknemo ima naziv "Karta" te se nalazi na poziciji "Igrac1".
                   Izvrši se povecanje kliknute karte         
                  */
-    void KartaOdabrana()
+    public void KartaOdabrana()
     {
         
        // Vector3 pozicijaMisa = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
