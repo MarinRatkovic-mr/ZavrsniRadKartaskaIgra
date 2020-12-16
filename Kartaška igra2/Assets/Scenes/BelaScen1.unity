@@ -1402,7 +1402,7 @@ GameObject:
   - component: {fileID: 904708266}
   - component: {fileID: 904708265}
   m_Layer: 0
-  m_Name: ODigranoPozicija4
+  m_Name: OdigranoPozicija4
   m_TagString: PozicijaIgracaOdigrano
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
