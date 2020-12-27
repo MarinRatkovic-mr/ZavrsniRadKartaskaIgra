@@ -23,6 +23,11 @@ public class Ai : MonoBehaviour
     public string BojaAduta;
     public bool Adut = false;
     public bool NaRedu = true;
+    public int BrojacRunda;
+    public GameObject IgracKojiJeZvaoURundiPrije = null;
+    public GameObject IgracKojiPrviZove;
+    public GameObject IgracKojiTrenutnoZove = null;
+    public GameObject IgracKojiZoveSljedeci = null;
 
     
     // Start is called before the first frame update
@@ -31,18 +36,243 @@ public class Ai : MonoBehaviour
         
         PostaviVrijednostiKarataPriPokretanju();
         OnMouseDown();
-       
         
         
     }
 
     // Update is called once per frame
     void Update()
-    {   
-        OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();
-        OdluciKojiIgracJeNaReduITajIgracIgra(PocistiPlocuIDajKartePobjedniku());
+    {
 
+        OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();
+        if ( OdigranoPozicija1.transform.childCount == 1 && OdigranoPozicija2.transform.childCount == 1 && OdigranoPozicija3.transform.childCount == 1 && OdigranoPozicija4.transform.childCount == 1)
+        {
+          StartCoroutine(PocistiPlocuNakonIgreDelay());
+        }
+        
+        
+
+        
     }
+   
+    public IEnumerator PocistiPlocuNakonIgreDelay()
+    {
+        yield return new WaitForSecondsRealtime(3);
+        OdluciKojiIgracJeNaReduITajIgracIgra(PocistiPlocuIDajKartePobjedniku());
+    }
+    
+    
+    public void AiZovi(GameObject IgracKojiZove)
+    {
+        IgracKojiPrviZove = IgracKojiZove;
+        AiAkoJeNaReduZaZvanjeZove(IgracKojiZove);     
+        
+        if(BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
+        {
+         AiAkoJeNaReduZaZvanjeZove(IgracKojiZoveSljedeci);
+            if (BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
+            {
+                AiAkoJeNaReduZaZvanjeZove(IgracKojiZoveSljedeci);
+                if (BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
+                {
+                    AiAkoJeNaReduZaZvanjeZove(IgracKojiZoveSljedeci);
+
+                }
+            }
+        }
+        
+        
+    }
+    
+    public void ZoviDalje(GameObject IgracKojiJeSadNaReduZaZvanje )
+    {
+        if (IgracKojiTrenutnoZove != null)
+        {
+            IgracKojiJeSadNaReduZaZvanje = IgracKojiTrenutnoZove;
+        }
+        GameObject SljedeciIgrac = null;
+       
+            if (IgracKojiJeSadNaReduZaZvanje == Igrac1)
+            {               
+                    GameObject PlocaZaZvanje = GameObject.Find("ZoviAdut");
+                    PlocaZaZvanje.SetActive(true);
+            }
+           else if (IgracKojiJeSadNaReduZaZvanje == Igrac2)
+            {
+                SljedeciIgrac = Igrac3;
+            }
+            else if (IgracKojiJeSadNaReduZaZvanje == Igrac3)
+            {
+                SljedeciIgrac = Igrac4;
+            }
+            else if (IgracKojiJeSadNaReduZaZvanje == Igrac4)
+            {
+                SljedeciIgrac = Igrac1;
+            }
+        IgracKojiZoveSljedeci = SljedeciIgrac;      
+               
+    }
+
+    public void AiAkoJeNaReduZaZvanjeZove(GameObject IgracNaReduZaZvanje)
+    {
+        IgracKojiTrenutnoZove = IgracNaReduZaZvanje;
+        int VrijednostSrc = 0;
+        int VrijednostZir = 0;
+        int VrijednostTik = 0;
+        int VrijednostZel = 0;
+
+        int BrojKartaSrc = 0;
+        int BrojKartaZir = 0;
+        int BrojKartaZel = 0;
+        int BrojKartaTik = 0;
+        
+
+        
+        List<GameObject> SveKarteURuciIgraca = new List<GameObject>();
+        
+        for(int i = 0; i < IgracNaReduZaZvanje.transform.childCount-2; i++)
+        {
+            GameObject KartaURuci = IgracNaReduZaZvanje.transform.GetChild(i).gameObject;
+            SveKarteURuciIgraca.Add(KartaURuci);
+            
+        }
+        foreach(GameObject Karta in SveKarteURuciIgraca) {
+            Ai KartaAi = Karta.GetComponent<Ai>();
+            if(KartaAi.BojaKarte == "Src")
+            {
+                BrojKartaSrc = BrojKartaSrc + 1;
+                if (KartaAi.NazivKarte != "Decko" && KartaAi.NazivKarte != "9")
+                {
+                    VrijednostSrc = VrijednostSrc + KartaAi.VrijednostKarte;
+                }
+                else if (KartaAi.NazivKarte == "Decko")
+                {
+                    VrijednostSrc = VrijednostSrc + 20;
+                }
+                else if (KartaAi.NazivKarte == "9")
+                {
+                    VrijednostSrc = VrijednostSrc + 14;
+                }
+            }
+            else if (KartaAi.BojaKarte == "Zir")
+            {
+                BrojKartaZir = BrojKartaZir + 1;
+                if (KartaAi.NazivKarte != "Decko" && KartaAi.NazivKarte != "9")
+                {
+                    VrijednostZir = VrijednostZir + KartaAi.VrijednostKarte;
+                }
+                else if (KartaAi.NazivKarte == "Decko")
+                {
+                    VrijednostZir = VrijednostZir + 20;
+                }
+                else if (KartaAi.NazivKarte == "9")
+                {
+                    VrijednostZir = VrijednostZir + 14;
+                }
+            }
+            else if (KartaAi.BojaKarte == "Tik")
+            {
+                BrojKartaTik = BrojKartaTik + 1;
+                if (KartaAi.NazivKarte != "Decko" && KartaAi.NazivKarte != "9")
+                {
+                    VrijednostTik = VrijednostTik + KartaAi.VrijednostKarte;
+                }
+                else if (KartaAi.NazivKarte == "Decko")
+                {
+                    VrijednostTik = VrijednostTik + 20;
+                }
+                else if (KartaAi.NazivKarte == "9")
+                {
+                    VrijednostTik = VrijednostTik + 14;
+                }
+            }
+            else if (KartaAi.BojaKarte == "Zel")
+            {
+                BrojKartaZel = BrojKartaZel + 1;
+                if (KartaAi.NazivKarte != "Decko" && KartaAi.NazivKarte != "9")
+                {
+                    VrijednostZel = VrijednostZel + KartaAi.VrijednostKarte;
+                }
+                else if (KartaAi.NazivKarte == "Decko")
+                {
+                    VrijednostZel = VrijednostZel + 20;
+                }
+                else if (KartaAi.NazivKarte == "9")
+                {
+                    VrijednostZel = VrijednostZel + 14;
+                }
+            }
+        }
+        if (IgracKojiTrenutnoZove != Igrac1)
+        {
+            if (VrijednostSrc > 40 || BrojKartaSrc > 5)
+            {
+                PostaviVrijednostiAduta("Src");
+
+            }
+            else if (VrijednostTik > 40 || BrojKartaTik > 5)
+            {
+                PostaviVrijednostiAduta("Tik");
+
+            }
+            else if (VrijednostZel > 40 || BrojKartaZel > 5)
+            {
+                PostaviVrijednostiAduta("Zel");
+
+            }
+            else if (VrijednostZir > 40 || BrojKartaZir > 5)
+            {
+                PostaviVrijednostiAduta("Zir");
+                
+            }
+
+            else
+            {
+                ZoviDalje(IgracNaReduZaZvanje);
+                if (IgracKojiZoveSljedeci == IgracKojiPrviZove)
+                {
+                    int[] SveVrijednosti = { VrijednostSrc, VrijednostTik, VrijednostZel, VrijednostZir };
+                    int NajvecaVrijednost = 0;
+                    int IndexNajveceVrijednosti = 0;
+                    for(int i=0;i < SveVrijednosti.Length; i++)
+                    {
+                        if (SveVrijednosti[i] > NajvecaVrijednost)
+                        {
+                            NajvecaVrijednost = SveVrijednosti[i];
+                            IndexNajveceVrijednosti = i;
+                        }
+                    }
+                    if(IndexNajveceVrijednosti == 1)
+                    {
+                        PostaviVrijednostiAduta("Src");
+                    }
+                    else if (IndexNajveceVrijednosti == 2)
+                    {
+                        PostaviVrijednostiAduta("Tik");
+                    }
+                    else if (IndexNajveceVrijednosti == 3)
+                    {
+                        PostaviVrijednostiAduta("Zel");
+                    }
+                    else if (IndexNajveceVrijednosti == 4)
+                    {
+                        PostaviVrijednostiAduta("Zir");
+                    }
+                    print("Zvao je na mus");
+                }
+                
+                  
+                
+            }
+        }
+        else if (IgracKojiTrenutnoZove == Igrac1)
+        {
+            GameObject PlocaZaZvanje = GameObject.Find("ZoviAdut");
+            PlocaZaZvanje.SetActive(true);
+        }
+        print(IgracNaReduZaZvanje+" Zvao Je >>>>" + BojaAduta +"<<<<<<" );
+    }
+
     public void AiIgracIgraSamPrvu(GameObject IgracKojiIgra)
     {
 
