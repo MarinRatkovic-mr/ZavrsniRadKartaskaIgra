@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
+using System.Linq;
+using System;
+
 public class Ai : MonoBehaviour
 {
     public GameObject OdigranoPozicija1;
@@ -13,23 +18,30 @@ public class Ai : MonoBehaviour
     public GameObject Igrac3;
     public GameObject Igrac4;
     public GameObject IgraciJedanITri;
-    public GameObject IgraciDvaiCetri;
+    public GameObject IgraciDvaiCetri;    
     GameObject PrvaOdigranaKarta;
-    
+    public GameObject TkoJeZvao;
+    public TextMeshProUGUI IgracKojiJeZvao;
+    public Image SlikaAduta;
+    public Sprite[] SlikeAduta;
+
     public string BojaKarte;
     public string NazivKarte;
+    public int RangZvanja;
     public int RangKarte;
     public int VrijednostKarte;
     public string BojaAduta;
     public bool Adut = false;
     public bool NaRedu = true;
-    public int BrojacRunda;
+    public int BrojacRunda = 0;
+    public int Zvanja = 0;
+
     public GameObject IgracKojiJeZvaoURundiPrije = null;
     public GameObject IgracKojiPrviZove;
     public GameObject IgracKojiTrenutnoZove = null;
     public GameObject IgracKojiZoveSljedeci = null;
+    public string SljedecaScena = "BelaScen1";
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,26 +50,654 @@ public class Ai : MonoBehaviour
         OnMouseDown();
         
         
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();
-        if ( OdigranoPozicija1.transform.childCount == 1 && OdigranoPozicija2.transform.childCount == 1 && OdigranoPozicija3.transform.childCount == 1 && OdigranoPozicija4.transform.childCount == 1)
+        
+        if (Igrac1.transform.childCount != 0 || Igrac2.transform.childCount != 0 || Igrac3.transform.childCount != 0 || Igrac4.transform.childCount != 0)
         {
-          StartCoroutine(PocistiPlocuNakonIgreDelay());
+            OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();
+
+            if (OdigranoPozicija1.transform.childCount == 1 && OdigranoPozicija2.transform.childCount == 1 && OdigranoPozicija3.transform.childCount == 1 && OdigranoPozicija4.transform.childCount == 1)
+            {
+                StartCoroutine(PocistiPlocuNakonIgreDelay());
+            }
+        }
+        else if(Igrac1.transform.childCount == 0 && Igrac2.transform.childCount == 0 && Igrac3.transform.childCount == 0 && Igrac4.transform.childCount == 0)
+        {
+          
+            StartCoroutine(RestartajIgruZasljedeciKrugPartije());
+            
+
+        }
+    }
+
+    public void ZoviZvanja()
+    {
+        
+        
+        AutomatskiProvjeriZvanjaIZovi();
+    }
+
+    public void AutomatskiProvjeriZvanjaIZovi()
+    {
+        int NajveceZvanjeIgrac1 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac1).NajveceZvanje;
+        int NajveceZvanjeIgrac2 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac2).NajveceZvanje;
+        int NajveceZvanjeIgrac3 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac3).NajveceZvanje;
+        int NajveceZvanjeIgrac4 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac4).NajveceZvanje;
+        int[] SvaZvanja = { NajveceZvanjeIgrac1, NajveceZvanjeIgrac2, NajveceZvanjeIgrac3, NajveceZvanjeIgrac4 };
+        int NajaceZvanje = 0;
+        int BrojacJednakihZvanja = 0;
+         print(NajveceZvanjeIgrac1 + "TO JEZVANJE IGRACA 1");
+        GameObject NajaciIgrac = null;
+        GameObject NajacaKartaUZvanju = null;
+
+        NajaceZvanje = SvaZvanja.Max();
+        
+        for(int i = 0; i < SvaZvanja.Length;i++)
+        {
+            if(NajaceZvanje == SvaZvanja[i])
+            {
+                BrojacJednakihZvanja = BrojacJednakihZvanja + 1;                
+            }
+        }
+
+        if (BrojacJednakihZvanja == 1)
+        {
+
+            int IndeksNajacegIgraca = Array.IndexOf(SvaZvanja, NajaceZvanje);
+            if (SvaZvanja[IndeksNajacegIgraca] == NajveceZvanjeIgrac1)
+            {
+                NajaciIgrac = Igrac1;
+            }
+            if (SvaZvanja[IndeksNajacegIgraca] == NajveceZvanjeIgrac2)
+            {
+                NajaciIgrac = Igrac2;
+            }
+            if (SvaZvanja[IndeksNajacegIgraca] == NajveceZvanjeIgrac3)
+            {
+                NajaciIgrac = Igrac3;
+            }
+            if (SvaZvanja[IndeksNajacegIgraca] == NajveceZvanjeIgrac4)
+            {
+                NajaciIgrac = Igrac4;
+            }
+        } 
+        else if (BrojacJednakihZvanja != 0)
+        {
+            GameObject NajcaKartaZvanjaIgrac1 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac1).ZadnjaKartaZvanja;
+            GameObject NajcaKartaZvanjaIgrac2 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac2).ZadnjaKartaZvanja;
+            GameObject NajcaKartaZvanjaIgrac3 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac3).ZadnjaKartaZvanja;
+            GameObject NajcaKartaZvanjaIgrac4 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac4).ZadnjaKartaZvanja;
+            GameObject[] NajaceKarteZvanja = { NajcaKartaZvanjaIgrac1, NajcaKartaZvanjaIgrac2, NajcaKartaZvanjaIgrac3, NajcaKartaZvanjaIgrac4 };
+
+            int BrojacKartaJednakogRanga = 1;
+            
+            
+            for (int i = 0; i < NajaceKarteZvanja.Length; i++)
+            {
+                if(NajacaKartaUZvanju == null)
+                {
+                    NajacaKartaUZvanju = NajaceKarteZvanja[i];
+                }
+                else if( NajacaKartaUZvanju != null)
+                {
+                    GameObject PrivremenaKarta = NajaceKarteZvanja[i];
+                    Ai AiPrivremenaKarta = PrivremenaKarta.GetComponent<Ai>();
+                    Ai AiNajacaKataUZvanju = NajacaKartaUZvanju.GetComponent<Ai>();
+                    if( AiPrivremenaKarta.RangZvanja > AiNajacaKataUZvanju.RangZvanja)
+                    {
+                        NajacaKartaUZvanju = PrivremenaKarta;
+                    }
+                    else if (AiPrivremenaKarta.RangZvanja == AiNajacaKataUZvanju.RangZvanja)
+                    {
+                        BrojacKartaJednakogRanga = BrojacKartaJednakogRanga + 1;
+                        /*Tu fali cijeli dio što bi se trebalo dogoditi ako igrač imaju isto zvanje sa istom jačinom znači treba igrač koje je prije od njega na redu imati zvanje*/
+                    }
+                }
+            }
+
+            int IndeksNajacegIgracaKarta = Array.IndexOf(NajaceKarteZvanja, NajacaKartaUZvanju);
+            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac1)
+            {
+                NajaciIgrac = Igrac1;
+            }
+            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac2)
+            {
+                NajaciIgrac = Igrac2;
+            }
+            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac3)
+            {
+                NajaciIgrac = Igrac3;
+            }
+            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac4)
+            {
+                NajaciIgrac = Igrac4;
+            }
+
+
+        }
+        GameObject SuigracNajacegaIgraca = null ;
+
+        if (NajaciIgrac == Igrac1)
+        {
+            SuigracNajacegaIgraca = Igrac3;
+        }
+        if (NajaciIgrac == Igrac2 )
+        {
+            SuigracNajacegaIgraca = Igrac4;
+        }
+        if (NajaciIgrac == Igrac3)
+        {
+            SuigracNajacegaIgraca = Igrac1;
+        }
+        if (NajaciIgrac == Igrac4)
+        {
+            SuigracNajacegaIgraca = Igrac2;
+        }
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+        List<GameObject> KarteKojeSeZovu = VratiZvanjeAkoPostojiKodPojedinogIgraca(NajaciIgrac).KarteKojeSuUZvanju;
+        List<GameObject> KarteKojeSeZovu2 = VratiZvanjeAkoPostojiKodPojedinogIgraca(SuigracNajacegaIgraca).KarteKojeSuUZvanju;
+        KarteKojeSeZovu.AddRange(KarteKojeSeZovu2);
+        
+        for(int i = 0; i < KarteKojeSeZovu.Count; i++)
+        {
+            GameObject Karta = KarteKojeSeZovu[i];
+            Selectable SelectebleKarta = Karta.GetComponent<Selectable>();
+            SelectebleKarta.KartaOkrenutaPremaGore = true;
+
+            Karta.transform.position = new Vector3(Karta.transform.position.x +5f, Karta.transform.position.y, Karta.transform.position.z - 5f);
+        }
+        /*
+        yield return new WaitForSecondsRealtime(5);
+
+        for (int i = 0; i < KarteKojeSeZovu.Count; i++)
+        {
+            GameObject Karta = KarteKojeSeZovu[i];
+            Selectable SelectebleKarta = Karta.GetComponent<Selectable>();
+            SelectebleKarta.KartaOkrenutaPremaGore = false;
+
+            Karta.transform.position = new Vector3(Karta.transform.position.x - 5f, Karta.transform.position.y, Karta.transform.position.z + 5f);
+        }*/
+
+        int SveukupnoZvanjaMi = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac1).SveukupnaZvanja + VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac3).SveukupnaZvanja;
+        int SveukupnoZvanjaVi = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac2).SveukupnaZvanja + VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac4).SveukupnaZvanja;
+        if (NajaciIgrac == Igrac1 || NajaciIgrac == Igrac3)
+        {
+            Spremanje.RezultatMi = Spremanje.RezultatMi + SveukupnoZvanjaMi;
+        }
+        if (NajaciIgrac == Igrac2 || NajaciIgrac == Igrac4)
+        {
+            Spremanje.RezultatVi = Spremanje.RezultatVi + SveukupnoZvanjaVi;
+        }
+
+        print("Najace Zvanje = " + NajaceZvanje);
+        print("Najaci Igrac = " +  NajaciIgrac);
+        print("Najaca Karta u Zvanju" + NajacaKartaUZvanju);
+        print("Najaci Suigrac " + SuigracNajacegaIgraca);
+
+    }
+
+   public (int SveukupnaZvanja, int NajveceZvanje, GameObject ZadnjaKartaZvanja, bool ZvanjaPostoje, List<GameObject> KarteKojeSuUZvanju) VratiZvanjeAkoPostojiKodPojedinogIgraca(GameObject Igrac)
+    {
+        
+        List<GameObject> SveKarteURuciIgraca = new List<GameObject>();
+        List<GameObject> KarteKojeSuUZvanju = new List<GameObject>();
+
+        for (int i = 0; i < Igrac.transform.childCount; i++)
+        {
+            GameObject KartaURuci = Igrac.transform.GetChild(i).gameObject;
+            SveKarteURuciIgraca.Add(KartaURuci);
+        }
+        List<GameObject> KartaSrc= new List<GameObject>();
+        List<GameObject> KartaTik = new List<GameObject>();
+        List<GameObject> KartaZel = new List<GameObject>();
+        List<GameObject> KartaZir = new List<GameObject>();
+        foreach (GameObject Karta in SveKarteURuciIgraca)
+        {
+            Ai KartaAi = Karta.GetComponent<Ai>();
+            if (KartaAi.BojaKarte == "Src")
+            {
+                KartaSrc.Add(Karta);
+            }
+            if (KartaAi.BojaKarte == "Tik")
+            {
+                KartaTik.Add(Karta);
+            }
+            if (KartaAi.BojaKarte == "Zel")
+            {
+                KartaZel.Add(Karta);
+            }
+            if (KartaAi.BojaKarte == "Zir")
+            {
+                KartaZir.Add(Karta);
+            }
+        }
+        int NajveceZvanje=0;       
+        int SveukupnaZvanja=0;
+        GameObject NajvecaKartaZvanja = null;
+        bool ZvanjaPostoje = false;
+
+        if(ZvanjaUIstojBoji(KartaSrc).ZvanjaPostoje == true)
+        {
+            SveukupnaZvanja = SveukupnaZvanja + ZvanjaUIstojBoji(KartaSrc).SveukupnaZvanja;
+            if (ZvanjaUIstojBoji(KartaSrc).NajveceZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = ZvanjaUIstojBoji(KartaSrc).NajveceZvanje;
+                if (NajvecaKartaZvanja == null)
+                {
+                    NajvecaKartaZvanja = ZvanjaUIstojBoji(KartaSrc).ZadnjaKartaZvanja;
+                }
+                else
+                {
+                    Ai AiNajvecaKartaZvanja = NajvecaKartaZvanja.GetComponent<Ai>();
+                    GameObject PrivremenaKarta = ZvanjaUIstojBoji(KartaSrc).ZadnjaKartaZvanja;
+                    Ai AiPrivremenaKarta = PrivremenaKarta.GetComponent<Ai>();
+                    if (AiNajvecaKartaZvanja.RangZvanja < AiPrivremenaKarta.RangZvanja)
+                    {
+                        NajvecaKartaZvanja = PrivremenaKarta;
+                    }
+                }
+
+            }
+            List<GameObject> PrivremenaListaKarta = ZvanjaUIstojBoji(KartaSrc).KarteKojeSuUZvanju;
+            for(int i = 0; i < PrivremenaListaKarta.Count;i++)
+            {
+                KarteKojeSuUZvanju.Add(PrivremenaListaKarta[i]);
+            }
+            
+        }
+        if (ZvanjaUIstojBoji(KartaTik).ZvanjaPostoje == true)
+        {
+            SveukupnaZvanja = SveukupnaZvanja + ZvanjaUIstojBoji(KartaTik).SveukupnaZvanja;
+            if (ZvanjaUIstojBoji(KartaTik).NajveceZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = ZvanjaUIstojBoji(KartaTik).NajveceZvanje;
+                if (NajvecaKartaZvanja == null)
+                {
+                    NajvecaKartaZvanja = ZvanjaUIstojBoji(KartaTik).ZadnjaKartaZvanja;
+                }
+                else
+                {
+                    Ai AiNajvecaKartaZvanja = NajvecaKartaZvanja.GetComponent<Ai>();
+                    GameObject PrivremenaKarta = ZvanjaUIstojBoji(KartaTik).ZadnjaKartaZvanja;
+                    Ai AiPrivremenaKarta = PrivremenaKarta.GetComponent<Ai>();
+                    if (AiNajvecaKartaZvanja.RangZvanja < AiPrivremenaKarta.RangZvanja)
+                    {
+                        NajvecaKartaZvanja = PrivremenaKarta;
+                    }
+                }
+
+            }
+            List<GameObject> PrivremenaListaKarta = ZvanjaUIstojBoji(KartaTik).KarteKojeSuUZvanju;
+            for (int i = 0; i < PrivremenaListaKarta.Count; i++)
+            {
+                KarteKojeSuUZvanju.Add(PrivremenaListaKarta[i]);
+            }
+        }
+        if (ZvanjaUIstojBoji(KartaZel).ZvanjaPostoje == true)
+        {
+            SveukupnaZvanja = SveukupnaZvanja + ZvanjaUIstojBoji(KartaZel).SveukupnaZvanja;
+            if (ZvanjaUIstojBoji(KartaZel).NajveceZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = ZvanjaUIstojBoji(KartaZel).NajveceZvanje;
+                if (NajvecaKartaZvanja == null)
+                {
+                    NajvecaKartaZvanja = ZvanjaUIstojBoji(KartaZel).ZadnjaKartaZvanja;
+                }
+                else
+                {
+                    Ai AiNajvecaKartaZvanja = NajvecaKartaZvanja.GetComponent<Ai>();
+                    GameObject PrivremenaKarta = ZvanjaUIstojBoji(KartaZel).ZadnjaKartaZvanja;
+                    Ai AiPrivremenaKarta = PrivremenaKarta.GetComponent<Ai>();
+                    if (AiNajvecaKartaZvanja.RangZvanja < AiPrivremenaKarta.RangZvanja)
+                    {
+                        NajvecaKartaZvanja = PrivremenaKarta;
+                    }
+                }
+
+            }
+            List<GameObject> PrivremenaListaKarta = ZvanjaUIstojBoji(KartaZel).KarteKojeSuUZvanju;
+            for (int i = 0; i < PrivremenaListaKarta.Count; i++)
+            {
+                KarteKojeSuUZvanju.Add(PrivremenaListaKarta[i]);
+            }
+        }
+        if (ZvanjaUIstojBoji(KartaZir).ZvanjaPostoje == true)
+        {
+            SveukupnaZvanja = SveukupnaZvanja + ZvanjaUIstojBoji(KartaZir).SveukupnaZvanja;
+            if (ZvanjaUIstojBoji(KartaZir).NajveceZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = ZvanjaUIstojBoji(KartaZir).NajveceZvanje;
+                if (NajvecaKartaZvanja == null)
+                {
+                    NajvecaKartaZvanja = ZvanjaUIstojBoji(KartaZir).ZadnjaKartaZvanja;
+                }
+                else
+                {
+                    Ai AiNajvecaKartaZvanja = NajvecaKartaZvanja.GetComponent<Ai>();
+                    GameObject PrivremenaKarta = ZvanjaUIstojBoji(KartaZir).ZadnjaKartaZvanja;
+                    Ai AiPrivremenaKarta = PrivremenaKarta.GetComponent<Ai>();
+                    if (AiNajvecaKartaZvanja.RangZvanja < AiPrivremenaKarta.RangZvanja)
+                    {
+                        NajvecaKartaZvanja = PrivremenaKarta;
+                    }
+                }
+
+            }
+            List<GameObject> PrivremenaListaKarta = ZvanjaUIstojBoji(KartaZir).KarteKojeSuUZvanju;
+            for (int i = 0; i < PrivremenaListaKarta.Count; i++)
+            {
+                KarteKojeSuUZvanju.Add(PrivremenaListaKarta[i]);
+            }
+        }
+        if (ZvanjaCetriISteKarte(KartaSrc, KartaTik, KartaZel, KartaZir).ZvanjaPostoje == true)
+        {
+            SveukupnaZvanja =SveukupnaZvanja+ ZvanjaCetriISteKarte(KartaSrc, KartaTik, KartaZel, KartaZir).SveukupnaZvanja;
+            
+
+            if(ZvanjaCetriISteKarte(KartaSrc, KartaTik, KartaZel, KartaZir).NajveceZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = ZvanjaCetriISteKarte(KartaSrc, KartaTik, KartaZel, KartaZir).NajveceZvanje;
+                NajvecaKartaZvanja = ZvanjaCetriISteKarte(KartaSrc, KartaTik, KartaZel, KartaZir).NajacaKartaZvanja;
+            }
+
+            List<GameObject> PrivremenaListaKarta = ZvanjaCetriISteKarte(KartaSrc, KartaTik, KartaZel, KartaZir).KarteKojeSuUZvanju;
+            for (int i = 0; i < PrivremenaListaKarta.Count; i++)
+            {
+                KarteKojeSuUZvanju.Add(PrivremenaListaKarta[i]);
+            }
+        }
+
+        if (SveukupnaZvanja != 0)
+        {
+            ZvanjaPostoje = true;
+        }
+
+        return (SveukupnaZvanja,NajveceZvanje,NajvecaKartaZvanja, ZvanjaPostoje,KarteKojeSuUZvanju);
+    }
+    // Treba doraditi da u istoj boji se može dva put zvati 20 ili više ako dođe do toga
+   public (int SveukupnaZvanja, int NajveceZvanje, GameObject ZadnjaKartaZvanja, bool ZvanjaPostoje,List<GameObject> KarteKojeSuUZvanju) ZvanjaUIstojBoji(List<GameObject> UnesiListuKarata)
+    {
+        int NajveceZvanje =0;
+        int TrenutnoZvanje = 0;
+        int SveukupnaZvanja =0;
+        GameObject ZadnjaKartaZvanja=null;
+        bool ZvanjaPostoje = false;
+        List<GameObject> KarteKojeSuUZvanju = new List<GameObject>();
+
+        List<int> KarteRang = new List<int>();
+        foreach (GameObject Karta in UnesiListuKarata)
+        {
+            Ai KartaAi = Karta.GetComponent<Ai>();
+            KarteRang.Add(KartaAi.RangZvanja);
+        }
+        KarteRang.Sort();
+        List<int> KarteZaZvanje = new List<int>();
+
+        for (int i = 0; i < KarteRang.Count; i++)
+        {
+            int BrojcKartaZaZvanje = 1;
+            int Rang1 = KarteRang[i];
+            for (int a = 0; a < KarteRang.Count; a++)
+            {
+                int Rang2 = KarteRang[a];
+                if (Rang1 + 1 == Rang2)
+                {
+                    KarteZaZvanje.Add(Rang1);
+                    KarteZaZvanje.Add(Rang2);
+                    BrojcKartaZaZvanje = BrojcKartaZaZvanje + 1;
+                }
+                else
+                {
+                    if (BrojcKartaZaZvanje < 3)
+                    {
+                        KarteZaZvanje.Clear();
+                        BrojcKartaZaZvanje = 1;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < KarteZaZvanje.Count; i++)
+        {
+            int Rang1 = KarteZaZvanje[i];
+            for (int a = 0; a < KarteZaZvanje.Count; a++)
+            {
+                int Rang2 = KarteZaZvanje[a];
+                if (Rang1 == Rang2)
+                {
+                    KarteZaZvanje.RemoveAt(i);
+
+                }
+            }
         }
         
-        
+        for(int i = 0; i < KarteZaZvanje.Count; i++)
+        {
+            int rang = KarteZaZvanje[i];
+            for(int a = 0; a < UnesiListuKarata.Count; a++)
+            {
+                GameObject Karta = UnesiListuKarata[a];
+                Ai KartaAi = Karta.GetComponent<Ai>();
+                if (rang == KartaAi.RangKarte)
+                {
+                    KarteKojeSuUZvanju.Add(Karta);
+                }
+            }
+            
+        }
 
-        
+        if (KarteZaZvanje.Count == 3)
+        {
+            TrenutnoZvanje = 20;
+            if (NajveceZvanje < TrenutnoZvanje)
+            {
+                NajveceZvanje = 20;
+            }
+            SveukupnaZvanja = SveukupnaZvanja + 20;
+        }
+        else if (KarteZaZvanje.Count == 4)
+        {
+            TrenutnoZvanje = 50;
+            if (NajveceZvanje < TrenutnoZvanje)
+            {
+                NajveceZvanje = 50;
+            }
+            SveukupnaZvanja = SveukupnaZvanja + 50;
+        }
+        else if (KarteZaZvanje.Count == 5)
+        {
+            TrenutnoZvanje = 100;
+            if (NajveceZvanje < TrenutnoZvanje)
+            {
+                NajveceZvanje = 100;
+            }
+            SveukupnaZvanja = SveukupnaZvanja + 100;
+        }
+        else if (KarteZaZvanje.Count == 8)
+        {
+            TrenutnoZvanje = 1001;
+            if (NajveceZvanje < TrenutnoZvanje)
+            {
+                NajveceZvanje = 1001;
+            }
+            SveukupnaZvanja = SveukupnaZvanja + 1001;
+        }
+
+        if (SveukupnaZvanja != 0)
+        {
+            ZvanjaPostoje = true;
+        }
+        return (SveukupnaZvanja, NajveceZvanje, ZadnjaKartaZvanja,ZvanjaPostoje,KarteKojeSuUZvanju);
     }
-   
+
+    public (int SveukupnaZvanja, int NajveceZvanje, GameObject NajacaKartaZvanja, bool ZvanjaPostoje, List<GameObject> KarteKojeSuUZvanju) ZvanjaCetriISteKarte(List<GameObject> Src, List<GameObject> Tik, List<GameObject> Zel, List<GameObject> Zir)
+    {
+        int NajveceZvanje = 0;
+        int TrenutnoZvanje = 0;
+        int SveukupnaZvanja = 0;
+        GameObject NajacaKartaZvanja = null;
+        bool ZvanjaPostoje = false;
+        List<GameObject> KarteKojeSuUZvanju = new List<GameObject>();
+
+        if (Src.Contains(GameObject.Find("SrcDecko")) && Tik.Contains(GameObject.Find("TikDecko")) && Zel.Contains(GameObject.Find("ZelDecko")) && Zir.Contains(GameObject.Find("ZirDecko")))
+        {
+            TrenutnoZvanje = 200;                         
+            NajacaKartaZvanja = GameObject.Find("SrcDecko");
+
+            SveukupnaZvanja = SveukupnaZvanja + TrenutnoZvanje;
+
+            KarteKojeSuUZvanju.Add(GameObject.Find("SrcDecko"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("TikDecko"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("ZelDecko"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("ZirDecko"));
+        }
+        if (Src.Contains(GameObject.Find("SrcKralj")) && Tik.Contains(GameObject.Find("TikKralj")) && Zel.Contains(GameObject.Find("ZelKralj")) && Zir.Contains(GameObject.Find("ZirKralj")))
+        {
+            TrenutnoZvanje = 100;
+            if (TrenutnoZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = TrenutnoZvanje;
+                NajacaKartaZvanja = GameObject.Find("SrcKralj");
+            }
+
+            SveukupnaZvanja = SveukupnaZvanja + TrenutnoZvanje;
+
+            KarteKojeSuUZvanju.Add(GameObject.Find("SrcKralj"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("TikKralj"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("ZelKralj"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("ZirKralj"));
+        }
+        if (Src.Contains(GameObject.Find("SrcBaba")) && Tik.Contains(GameObject.Find("TikBaba")) && Zel.Contains(GameObject.Find("ZelBaba")) && Zir.Contains(GameObject.Find("ZirBaba")))
+        {
+            TrenutnoZvanje = 100;
+            if (TrenutnoZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = TrenutnoZvanje;
+                NajacaKartaZvanja = GameObject.Find("SrcBaba");
+            }
+            SveukupnaZvanja = SveukupnaZvanja + TrenutnoZvanje;
+
+            KarteKojeSuUZvanju.Add(GameObject.Find("SrcBaba"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("TikBaba"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("ZelBaba"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("ZirBaba"));
+        }
+        if (Src.Contains(GameObject.Find("Src10")) && Tik.Contains(GameObject.Find("Tik10")) && Zel.Contains(GameObject.Find("Zel10")) && Zir.Contains(GameObject.Find("Zir10")))
+        {
+            TrenutnoZvanje = 100;
+            if (TrenutnoZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = TrenutnoZvanje;
+                NajacaKartaZvanja = GameObject.Find("Src10");
+            }
+            SveukupnaZvanja = SveukupnaZvanja + TrenutnoZvanje;
+
+            KarteKojeSuUZvanju.Add(GameObject.Find("Src10"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("Tik10"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("Zel10"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("Zir10"));
+        }
+        if (Src.Contains(GameObject.Find("Src9")) && Tik.Contains(GameObject.Find("Tik9")) && Zel.Contains(GameObject.Find("Zel9")) && Zir.Contains(GameObject.Find("Zir9")))
+        {         
+            TrenutnoZvanje = 150;
+            if (TrenutnoZvanje > NajveceZvanje)
+            {
+                NajveceZvanje = TrenutnoZvanje;
+            
+            }
+            SveukupnaZvanja = SveukupnaZvanja + TrenutnoZvanje;
+
+            KarteKojeSuUZvanju.Add(GameObject.Find("Src9"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("Tik9"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("Zel9"));
+            KarteKojeSuUZvanju.Add(GameObject.Find("Zir9"));
+        }
+        if(SveukupnaZvanja != 0)
+        {
+            ZvanjaPostoje = true;
+        }
+
+        return (SveukupnaZvanja, NajveceZvanje, NajacaKartaZvanja, ZvanjaPostoje, KarteKojeSuUZvanju);
+    }
+
+    public int VratiVrijednostKarataIgraci(GameObject Igraci)
+    {
+       int  UkupaVrijednostKarataNaKaraju=0;
+        if( Igraci.transform.childCount != null)
+        {
+            for(int i=0;i< Igraci.transform.childCount; i++)
+            {
+                GameObject Karta = Igraci.transform.GetChild(i).gameObject;
+                Ai VrijednostTrenutne = Karta.GetComponent<Ai>();
+                UkupaVrijednostKarataNaKaraju = UkupaVrijednostKarataNaKaraju + VrijednostTrenutne.VrijednostKarte;
+
+            }
+        }
+
+        return UkupaVrijednostKarataNaKaraju;
+    }
+    
+    public IEnumerator RestartajIgruZasljedeciKrugPartije()
+    {
+        yield return new WaitForSecondsRealtime(2);
+
+        if (Igrac1.transform.childCount == 0 && Igrac2.transform.childCount == 0 && Igrac3.transform.childCount == 0 && Igrac4.transform.childCount == 0)
+        {
+            Rezultati.PostaviNoviRezultatMi(VratiVrijednostKarataIgraci(IgraciJedanITri));
+            Rezultati.PostaviNoviRezultatVi(VratiVrijednostKarataIgraci(IgraciDvaiCetri));
+            SceneManager.LoadScene(SljedecaScena);
+            enabled = false;
+        }
+         
+       
+    }
+    public void PozvanoSrce(GameObject IgracKojiJeZvaoSrce)
+    {
+        if (BojaAduta == "Src") {
+        IgracKojiJeZvao.SetText(IgracKojiJeZvaoSrce.name);
+        SlikaAduta.sprite = SlikeAduta[0];
+        TkoJeZvao.SetActive(true); 
+        }
+    }
+    public void PozvanoTikva(GameObject IgracKojiJeZvaoTikvu)
+    {
+        if (BojaAduta == "Tik")
+        {
+            IgracKojiJeZvao.SetText(IgracKojiJeZvaoTikvu.name);
+            SlikaAduta.sprite = SlikeAduta[1];
+            TkoJeZvao.SetActive(true);
+        }
+    }
+    public void PozvanoZelje(GameObject IgracKojiJeZvaoZelje)
+    {
+        if (BojaAduta == "Zel")
+        {
+            IgracKojiJeZvao.SetText(IgracKojiJeZvaoZelje.name);
+            SlikaAduta.sprite = SlikeAduta[2];
+            TkoJeZvao.SetActive(true);
+        }
+    }
+    public void PozvanoZir(GameObject IgracKojiJeZvaoZir)
+    {
+        if (BojaAduta == "Zir")
+        {
+            IgracKojiJeZvao.SetText(IgracKojiJeZvaoZir.name);
+            SlikaAduta.sprite = SlikeAduta[3];
+            TkoJeZvao.SetActive(true);
+        }
+    }
+
     public IEnumerator PocistiPlocuNakonIgreDelay()
     {
-        yield return new WaitForSecondsRealtime(3);
+        yield return new WaitForSecondsRealtime(1);
         OdluciKojiIgracJeNaReduITajIgracIgra(PocistiPlocuIDajKartePobjedniku());
     }
     
@@ -205,31 +845,34 @@ public class Ai : MonoBehaviour
         }
         if (IgracKojiTrenutnoZove != Igrac1)
         {
-            if (VrijednostSrc > 40 || BrojKartaSrc > 5)
+            if (VrijednostSrc > 40 || BrojKartaSrc > 4)
             {
                 PostaviVrijednostiAduta("Src");
-
+                PozvanoSrce(IgracKojiTrenutnoZove);
             }
             else if (VrijednostTik > 40 || BrojKartaTik > 5)
             {
                 PostaviVrijednostiAduta("Tik");
+                PozvanoTikva(IgracKojiTrenutnoZove);
 
             }
             else if (VrijednostZel > 40 || BrojKartaZel > 5)
             {
                 PostaviVrijednostiAduta("Zel");
+                PozvanoZelje(IgracKojiTrenutnoZove);
 
             }
             else if (VrijednostZir > 40 || BrojKartaZir > 5)
             {
                 PostaviVrijednostiAduta("Zir");
-                
+                PozvanoZir(IgracKojiTrenutnoZove);
+
             }
 
             else
             {
                 ZoviDalje(IgracNaReduZaZvanje);
-                if (IgracKojiZoveSljedeci == IgracKojiPrviZove)
+                if (IgracKojiZoveSljedeci == Igrac4)
                 {
                     int[] SveVrijednosti = { VrijednostSrc, VrijednostTik, VrijednostZel, VrijednostZir };
                     int NajvecaVrijednost = 0;
@@ -245,18 +888,22 @@ public class Ai : MonoBehaviour
                     if(IndexNajveceVrijednosti == 1)
                     {
                         PostaviVrijednostiAduta("Src");
+                        PozvanoSrce(IgracKojiTrenutnoZove);
                     }
                     else if (IndexNajveceVrijednosti == 2)
                     {
                         PostaviVrijednostiAduta("Tik");
+                        PozvanoTikva(IgracKojiTrenutnoZove);
                     }
                     else if (IndexNajveceVrijednosti == 3)
                     {
                         PostaviVrijednostiAduta("Zel");
+                        PozvanoZelje(IgracKojiTrenutnoZove);
                     }
                     else if (IndexNajveceVrijednosti == 4)
                     {
                         PostaviVrijednostiAduta("Zir");
+                        PozvanoZir(IgracKojiTrenutnoZove);
                     }
                     print("Zvao je na mus");
                 }
@@ -551,7 +1198,12 @@ public class Ai : MonoBehaviour
                 PremjestiViseKarataNaJeduLokaciju(OdigranaKartaPozicija1, OdigranaKartaPozicija2, OdigranaKartaPozicija3, OdigranaKartaPozicija4, IgraciDvaiCetri);
                 return NajaciIgrac = Igrac4;
             }
-
+           // treba doraditi
+            else if (OdigranaKartaPozicija1Ai.Adut == false && OdigranaKartaPozicija3Ai.Adut == false && OdigranaKartaPozicija2Ai.Adut == false && OdigranaKartaPozicija4Ai.Adut == false)
+            {
+                PremjestiViseKarataNaJeduLokaciju(OdigranaKartaPozicija1, OdigranaKartaPozicija2, OdigranaKartaPozicija3, OdigranaKartaPozicija4, IgraciDvaiCetri);
+                return NajaciIgrac = Igrac1;
+            }
             else if (OdigranaKartaPozicija1Ai.Adut == true  | OdigranaKartaPozicija3Ai.Adut == true && OdigranaKartaPozicija2Ai.Adut == true | OdigranaKartaPozicija4Ai.Adut == true)
             {
                 if(OdigranaKartaPozicija1Ai.Adut==true && OdigranaKartaPozicija2Ai.Adut == true && OdigranaKartaPozicija1Ai.RangKarte > OdigranaKartaPozicija2Ai.RangKarte && OdigranaKartaPozicija4Ai.Adut == false)
@@ -741,41 +1393,49 @@ public class Ai : MonoBehaviour
 
             if (NazivKarte == "7")
             {
+                RangZvanja = 1;
                 RangKarte = 1;
                 VrijednostKarte = 0;
             }
             if (NazivKarte == "8")
             {
+                RangZvanja = 2;
                 RangKarte = 2;
                 VrijednostKarte = 0;
             }
             if (NazivKarte == "9")
             {
+                RangZvanja = 3;
                 RangKarte = 3;
                 VrijednostKarte = 0;
             }
             if (NazivKarte == "10")
             {
+                RangZvanja = 4;
                 RangKarte = 7;
                 VrijednostKarte = 10;
             }
             if (NazivKarte == "Decko")
             {
+                RangZvanja = 5;
                 RangKarte = 4;
                 VrijednostKarte = 2;
             }
             if (NazivKarte == "Baba")
             {
+                RangZvanja = 6;
                 RangKarte = 5;
                 VrijednostKarte = 3;
             }
             if (NazivKarte == "Kralj")
             {
+                RangZvanja = 7;
                 RangKarte = 6;
                 VrijednostKarte = 4;
             }
             if (NazivKarte == "As")
             {
+                RangZvanja = 8;
                 RangKarte = 8;
                 VrijednostKarte = 11;
             }

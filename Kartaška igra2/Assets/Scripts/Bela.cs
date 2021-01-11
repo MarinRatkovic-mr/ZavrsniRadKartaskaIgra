@@ -23,13 +23,11 @@ public class Bela : MonoBehaviour
     private List<string> Igrac3 = new List<string>();
     private List<string> Igrac4 = new List<string>();
 
-    public List<string> spil;
+    public  List<string> spil;
     
     void Start()
-    {
-        //Stvaranje igrača pri početku igre
-        Igraci = new List<string>[] { Igrac1, Igrac2, Igrac3, Igrac4 };
-        PlayCards();
+    {     
+        OdigrajKarte();
     }
 
     
@@ -37,23 +35,28 @@ public class Bela : MonoBehaviour
     {
         
     }
+
+    
     // Metoda za prizvanje promješanog špila karata
-    public void PlayCards()
+    public void OdigrajKarte()
     {
+        
+        
+        Igrac1.Clear();
+        Igrac2.Clear();
+        Igrac3.Clear();
+        Igrac4.Clear();
+        spil.Clear();      
+        Igraci = new List<string>[] { Igrac1, Igrac2, Igrac3, Igrac4 };
+
         spil = KreirajSpil();
-        PromjesajKarte(spil);
-        //Testiraj tako da isprintaš karte na konzolu
-        
-       /* 
-        foreach(string karta in spil)
-        {
-            print(karta);
-       
-        
-        }
-       */
-        BelaSortiraj();
+        PromjesajKarte(spil);        
+        BelaSortiraj();       
         StartCoroutine(BelaDjeli());
+
+        
+       
+
     }
 
     //Kreiranje špila karata tako da uzmemo sve vrijednosti iz vektora "boje" i "vrijednosti"
@@ -90,17 +93,17 @@ public class Bela : MonoBehaviour
     //Metoda koja dodjeljuje izmješane karte igračima gdje je igrač 1 koji je korisnik igre
     //Postavlja karte na stol tako da samo igrač 1 vidi prvih 6 karata a ostale ne
     //Usmjeruje karte pri podjeli u pravim pravcima 
-    IEnumerator BelaDjeli()
+    public IEnumerator BelaDjeli()
     {
         
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < Igraci.Length; i++) {
             
             float zAngle = 0f;
 
             float yOffset = 0;
             float zOffset = 0;
             float xOffset = 0;
-        foreach(string karta in Igraci[i])
+        foreach(string karta in Igraci[i].ToArray())
         {
                 
                     yield return new WaitForSeconds(0.06f);
@@ -171,4 +174,6 @@ public class Bela : MonoBehaviour
             }
        }
     }
+
+    
 }
