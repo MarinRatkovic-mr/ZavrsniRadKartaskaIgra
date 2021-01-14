@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/GlavniMeni.unity
+    guid: eac8fa0c33fc2444ca84238c4dacfb55
+  - enabled: 1
+    path: Assets/Scenes/BelaScen1.unity
+    guid: 97b76bd13a2590842a71065857723c85
   m_configObjects: {}

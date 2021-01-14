@@ -25,8 +25,8 @@ public class Rezultati : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BrojiRezultatStalno(IgraciDvaiCetri, Rezultat2i4);
-        BrojiRezultatStalno(IgraciJedaniTri, Rezultat1i3);
+       // BrojiRezultatStalno(IgraciDvaiCetri, Rezultat2i4);
+      //  BrojiRezultatStalno(IgraciJedaniTri, Rezultat1i3);
     }
 
     public void BrojiRezultatStalno(GameObject Igraci, TextMeshProUGUI Rezultat)
