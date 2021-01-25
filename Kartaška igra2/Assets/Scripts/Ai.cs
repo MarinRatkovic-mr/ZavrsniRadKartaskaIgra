@@ -36,29 +36,49 @@ public class Ai : MonoBehaviour
     public int BrojacRunda = 0;
     public int Zvanja = 0;
 
-    public GameObject IgracKojiJeZvaoURundiPrije = null;
     public GameObject IgracKojiPrviZove;
     public GameObject IgracKojiTrenutnoZove = null;
     public GameObject IgracKojiZoveSljedeci = null;
+    public GameObject IgracNaMusu;
+    
     public string SljedecaScena = "BelaScen1";
 
     public TextMeshProUGUI Rezultat1i3;
     public TextMeshProUGUI Rezultat2i4;
+    private bool IzvrsavanjeJednom ;
     // Start is called before the first frame update
+
+    public static int ZvanjaMi ;
+    public static int ZvanjaVi ;
+
+    public GameObject ZoviAdutPloca;
+    public GameObject ZoviDaljeButton;
     void Start()
     {
-        
+        OdlučiKojiIgracSadaPrviZove();
+        ZvanjaMi = 0;
+        ZvanjaVi = 0;
         PostaviVrijednostiKarataPriPokretanju();
         OnMouseDown();
-        
-        
+        BojaAduta = null;
+        IzvrsavanjeJednom = false;
 
+        print("Igrac Koji Prvi Zove "+IgracKojiPrviZove.name);
+        print("Igrac koji je na musu "+IgracNaMusu.name);
+
+        StartCoroutine(AiZoviAdutSaZakasnjenjem());
     }
 
     // Update is called once per frame
     void Update()
     {
         
+        if(BojaAduta !=null && IzvrsavanjeJednom == false)
+        {
+            AutomatskiProvjeriZvanjaIZovi();
+            IzvrsavanjeJednom =  true;
+        }
+
         if (Igrac1.transform.childCount != 0 || Igrac2.transform.childCount != 0 || Igrac3.transform.childCount != 0 || Igrac4.transform.childCount != 0)
         {
             OdluciKojaKartaJeDoSadNajvecaIStoTrebaOdbaciti();
@@ -69,23 +89,52 @@ public class Ai : MonoBehaviour
             }
         }
         else if(Igrac1.transform.childCount == 0 && Igrac2.transform.childCount == 0 && Igrac3.transform.childCount == 0 && Igrac4.transform.childCount == 0)
-        {
-          
-            StartCoroutine(RestartajIgruZasljedeciKrugPartije());
-            
-
+        {         
+            StartCoroutine(RestartajIgruZasljedeciKrugPartije());           
         }
+        
+        
     }
 
-    public void ZoviZvanja()
+    public void OdlučiKojiIgracSadaPrviZove()
     {
+        if(Spremanje.IgracKojiSadaZove == 1)
+        {
+            IgracKojiPrviZove = Igrac1;
+            IgracNaMusu = Igrac4;
+            
+        }
+        else if (Spremanje.IgracKojiSadaZove == 2)
+        {
+            IgracKojiPrviZove = Igrac2;
+            IgracNaMusu = Igrac1;
+            
+        }
+        else if (Spremanje.IgracKojiSadaZove == 3)
+        {
+            IgracKojiPrviZove = Igrac3;
+            IgracNaMusu = Igrac2;
+          
+        }
+        else if (Spremanje.IgracKojiSadaZove == 4)
+        {
+            IgracKojiPrviZove = Igrac4;
+            IgracNaMusu = Igrac3;
+            
+        }
         
+    }
+    public IEnumerator AiZoviAdutSaZakasnjenjem()
+    {
+        yield return new WaitForSecondsRealtime(5);
         
-        AutomatskiProvjeriZvanjaIZovi();
+            AiZovi(IgracKojiPrviZove);
+        
     }
 
     public void AutomatskiProvjeriZvanjaIZovi()
     {
+        //print("Funkcija Se Ponovila");
         int NajveceZvanjeIgrac1 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac1).NajveceZvanje;
         int NajveceZvanjeIgrac2 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac2).NajveceZvanje;
         int NajveceZvanjeIgrac3 = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac3).NajveceZvanje;
@@ -93,7 +142,7 @@ public class Ai : MonoBehaviour
         int[] SvaZvanja = { NajveceZvanjeIgrac1, NajveceZvanjeIgrac2, NajveceZvanjeIgrac3, NajveceZvanjeIgrac4 };
         int NajaceZvanje = 0;
         int BrojacJednakihZvanja = 0;
-         print(NajveceZvanjeIgrac1 + "TO JEZVANJE IGRACA 1");
+        // print(NajveceZvanjeIgrac1 + "TO JEZVANJE IGRACA 1");
         GameObject NajaciIgrac = null;
         GameObject NajacaKartaUZvanju = null;
 
@@ -141,23 +190,24 @@ public class Ai : MonoBehaviour
             
             for (int i = 0; i < NajaceKarteZvanja.Length; i++)
             {
-                if(NajacaKartaUZvanju == null)
+                if(NajacaKartaUZvanju == null && NajaceKarteZvanja[i] != null)
                 {
                     NajacaKartaUZvanju = NajaceKarteZvanja[i];
                 }
-                else if( NajacaKartaUZvanju != null)
+                else if( NajacaKartaUZvanju != null && NajaceKarteZvanja[i] != null)
                 {
                     GameObject PrivremenaKarta = NajaceKarteZvanja[i];
                     Ai AiPrivremenaKarta = PrivremenaKarta.GetComponent<Ai>();
                     Ai AiNajacaKataUZvanju = NajacaKartaUZvanju.GetComponent<Ai>();
                     if( AiPrivremenaKarta.RangZvanja > AiNajacaKataUZvanju.RangZvanja)
                     {
-                        NajacaKartaUZvanju = PrivremenaKarta;
+                        NajacaKartaUZvanju = PrivremenaKarta;                       
                     }
                     else if (AiPrivremenaKarta.RangZvanja == AiNajacaKataUZvanju.RangZvanja)
                     {
                         BrojacKartaJednakogRanga = BrojacKartaJednakogRanga + 1;
-                        /*Tu fali cijeli dio što bi se trebalo dogoditi ako igrač imaju isto zvanje sa istom jačinom znači treba igrač koje je prije od njega na redu imati zvanje*/
+                        
+                        // to be continue
                     }
                 }
             }
@@ -167,17 +217,20 @@ public class Ai : MonoBehaviour
             {
                 NajaciIgrac = Igrac1;
             }
-            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac2)
+            else if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac2)
             {
                 NajaciIgrac = Igrac2;
             }
-            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac3)
+            else if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac3)
             {
                 NajaciIgrac = Igrac3;
             }
-            if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac4)
+           else if (NajaceKarteZvanja[IndeksNajacegIgracaKarta] == NajcaKartaZvanjaIgrac4)
             {
                 NajaciIgrac = Igrac4;
+            }else if( BrojacKartaJednakogRanga > 1)
+            {
+
             }
 
 
@@ -215,7 +268,7 @@ public class Ai : MonoBehaviour
             Selectable SelectebleKarta = Karta.GetComponent<Selectable>();
             SelectebleKarta.KartaOkrenutaPremaGore = true;
 
-            Karta.transform.position = new Vector3(Karta.transform.position.x , Karta.transform.position.y, Karta.transform.position.z-0.9f );
+            //Karta.transform.position = new Vector3(Karta.transform.position.x , Karta.transform.position.y, Karta.transform.position.z-0.9f );
         }
         /*
         yield return new WaitForSecondsRealtime(5);
@@ -235,13 +288,17 @@ public class Ai : MonoBehaviour
 
         if( NajaciIgrac == Igrac1 || NajaciIgrac == Igrac3)
         {
-           Rezultat1i3.SetText(SveukupnoZvanjaMi.ToString());
-            Rezultat2i4.SetText("0");
+            if (ZvanjaMi == 0)
+            {
+                ZvanjaMi = SveukupnoZvanjaMi;
+            }
         }
         else if(NajaciIgrac == Igrac2 || NajaciIgrac == Igrac4)
         {
-           Rezultat2i4.SetText(SveukupnoZvanjaVi.ToString());
-           Rezultat1i3.SetText("0");
+           if(ZvanjaMi == 0)
+            { 
+           ZvanjaVi = SveukupnoZvanjaVi;
+           }
         }
         
        
@@ -250,10 +307,10 @@ public class Ai : MonoBehaviour
             print(KarteKojeSeZovu[i].name);
         }
 
-        print("Najace Zvanje = " + NajaceZvanje);
-        print("Najaci Igrac = " +  NajaciIgrac);
-        print("Najaca Karta u Zvanju" + NajacaKartaUZvanju);
-        print("Najaci Suigrac " + SuigracNajacegaIgraca);
+       // print("Najace Zvanje = " + NajaceZvanje);
+       // print("Najaci Igrac = " +  NajaciIgrac);
+       // print("Najaca Karta u Zvanju" + NajacaKartaUZvanju);
+       // print("Najaci Suigrac " + SuigracNajacegaIgraca);
 
     }
 
@@ -765,10 +822,18 @@ public class Ai : MonoBehaviour
 
         if (Igrac1.transform.childCount == 0 && Igrac2.transform.childCount == 0 && Igrac3.transform.childCount == 0 && Igrac4.transform.childCount == 0)
         {
-            Rezultati.PostaviNoviRezultatMi(VratiVrijednostKarataIgraci(IgraciJedanITri));
-            Rezultati.PostaviNoviRezultatVi(VratiVrijednostKarataIgraci(IgraciDvaiCetri));
+            Rezultati.PostaviNoviRezultatMi(VratiVrijednostKarataIgraci(IgraciJedanITri)+ZvanjaMi);
+            Rezultati.PostaviNoviRezultatVi(VratiVrijednostKarataIgraci(IgraciDvaiCetri)+ZvanjaVi);
+            if(Spremanje.IgracKojiSadaZove != 4)
+            {
+                Spremanje.IgracKojiSadaZove = Spremanje.IgracKojiSadaZove + 1;
+            }
+            else if (Spremanje.IgracKojiSadaZove == 4)
+            {
+                Spremanje.IgracKojiSadaZove = 1;
+            }
             SceneManager.LoadScene(SljedecaScena);
-            enabled = false;
+           // enabled = false;
         }
          
        
@@ -818,51 +883,47 @@ public class Ai : MonoBehaviour
     
     public void AiZovi(GameObject IgracKojiZove)
     {
-        IgracKojiPrviZove = IgracKojiZove;
-        AiAkoJeNaReduZaZvanjeZove(IgracKojiZove);     
-        
-        if(BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
-        {
-         AiAkoJeNaReduZaZvanjeZove(IgracKojiZoveSljedeci);
+        IgracKojiTrenutnoZove = IgracKojiZove;
+       
+              
+            AiAkoJeNaReduZaZvanjeZove(IgracKojiTrenutnoZove);
             if (BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
             {
-                AiAkoJeNaReduZaZvanjeZove(IgracKojiZoveSljedeci);
+                ZoviDalje(IgracKojiTrenutnoZove);
+                IgracKojiTrenutnoZove = IgracKojiZoveSljedeci;             
+                AiAkoJeNaReduZaZvanjeZove(IgracKojiTrenutnoZove);
                 if (BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
                 {
-                    AiAkoJeNaReduZaZvanjeZove(IgracKojiZoveSljedeci);
-
+                    ZoviDalje(IgracKojiTrenutnoZove);
+                    IgracKojiTrenutnoZove = IgracKojiZoveSljedeci;
+                    AiAkoJeNaReduZaZvanjeZove(IgracKojiTrenutnoZove);                   
                 }
             }
-        }
+        
         
         
     }
     
     public void ZoviDalje(GameObject IgracKojiJeSadNaReduZaZvanje )
     {
-        if (IgracKojiTrenutnoZove != null)
-        {
-            IgracKojiJeSadNaReduZaZvanje = IgracKojiTrenutnoZove;
-        }
         GameObject SljedeciIgrac = null;
-       
-            if (IgracKojiJeSadNaReduZaZvanje == Igrac1)
-            {               
-                    GameObject PlocaZaZvanje = GameObject.Find("ZoviAdut");
-                    PlocaZaZvanje.SetActive(true);
-            }
-           else if (IgracKojiJeSadNaReduZaZvanje == Igrac2)
-            {
-                SljedeciIgrac = Igrac3;
-            }
-            else if (IgracKojiJeSadNaReduZaZvanje == Igrac3)
-            {
-                SljedeciIgrac = Igrac4;
-            }
-            else if (IgracKojiJeSadNaReduZaZvanje == Igrac4)
-            {
-                SljedeciIgrac = Igrac1;
-            }
+        
+        if (IgracKojiJeSadNaReduZaZvanje == Igrac1)
+        {
+            SljedeciIgrac = Igrac2;       
+        }
+        else if (IgracKojiJeSadNaReduZaZvanje == Igrac2)
+        {
+            SljedeciIgrac = Igrac3;
+        }
+        else if (IgracKojiJeSadNaReduZaZvanje == Igrac3)
+        {
+            SljedeciIgrac = Igrac4;
+        }
+        else if (IgracKojiJeSadNaReduZaZvanje == Igrac4)
+        {
+            SljedeciIgrac = Igrac1;
+        }
         IgracKojiZoveSljedeci = SljedeciIgrac;      
                
     }
@@ -984,9 +1045,8 @@ public class Ai : MonoBehaviour
             }
 
             else
-            {
-                ZoviDalje(IgracNaReduZaZvanje);
-                if (IgracKojiZoveSljedeci == Igrac4)
+            {               
+                if (IgracNaReduZaZvanje == IgracNaMusu)
                 {
                     int[] SveVrijednosti = { VrijednostSrc, VrijednostTik, VrijednostZel, VrijednostZir };
                     int NajvecaVrijednost = 0;
@@ -999,22 +1059,23 @@ public class Ai : MonoBehaviour
                             IndexNajveceVrijednosti = i;
                         }
                     }
-                    if(IndexNajveceVrijednosti == 1)
+
+                    if(IndexNajveceVrijednosti == 0)
                     {
                         PostaviVrijednostiAduta("Src");
                         PozvanoSrce(IgracKojiTrenutnoZove);
                     }
-                    else if (IndexNajveceVrijednosti == 2)
+                    if (IndexNajveceVrijednosti == 1)
                     {
                         PostaviVrijednostiAduta("Tik");
                         PozvanoTikva(IgracKojiTrenutnoZove);
                     }
-                    else if (IndexNajveceVrijednosti == 3)
+                    if (IndexNajveceVrijednosti == 2)
                     {
                         PostaviVrijednostiAduta("Zel");
                         PozvanoZelje(IgracKojiTrenutnoZove);
                     }
-                    else if (IndexNajveceVrijednosti == 4)
+                     if (IndexNajveceVrijednosti == 3)
                     {
                         PostaviVrijednostiAduta("Zir");
                         PozvanoZir(IgracKojiTrenutnoZove);
@@ -1026,12 +1087,17 @@ public class Ai : MonoBehaviour
                 
             }
         }
-        else if (IgracKojiTrenutnoZove == Igrac1)
+        else if (IgracKojiTrenutnoZove == Igrac1 && BojaAduta != "Src" && BojaAduta != "Tik" && BojaAduta != "Zel" && BojaAduta != "Zir")
         {
-            GameObject PlocaZaZvanje = GameObject.Find("ZoviAdut");
-            PlocaZaZvanje.SetActive(true);
+            ZoviAdutPloca.SetActive(true);
+            if (IgracNaMusu == Igrac1)
+            {
+                ZoviDaljeButton.SetActive(false);
+            }
         }
+
         print(IgracNaReduZaZvanje+" Zvao Je >>>>" + BojaAduta +"<<<<<<" );
+
     }
 
     public void AiIgracIgraSamPrvu(GameObject IgracKojiIgra)
@@ -1045,9 +1111,9 @@ public class Ai : MonoBehaviour
             GameObject NajveciAdut = null;
             GameObject NajmanjiAdut = null;
             string ImePozicije = "OdigranoPozicija" + IgracKojiIgra.name.Substring(IgracKojiIgra.name.Length - 1);
-            print("Ime pozicije koja se trenutno igra:" + ImePozicije);          
+            //print("Ime pozicije koja se trenutno igra:" + ImePozicije);          
             PozicijaNaKojuIgracOdigra = GameObject.Find(ImePozicije).gameObject;                     
-            print("Ime pozicije koja se trenutno igra:" + PozicijaNaKojuIgracOdigra.name);
+          //  print("Ime pozicije koja se trenutno igra:" + PozicijaNaKojuIgracOdigra.name);
             for (int i=0;i< IgracKojiIgra.transform.childCount; i++)
             {
                 GameObject TrenutnaKarta = IgracKojiIgra.transform.GetChild(i).gameObject;
@@ -1157,7 +1223,7 @@ public class Ai : MonoBehaviour
                 {
                     Selectable PokaziKartu = NajvecaKarta.GetComponent<Selectable>();
                     PokaziKartu.KartaOkrenutaPremaGore = true;
-                    print("Pozicija koja bi se sad trebala odigrati" + PozicijaNaKojuIgracOdigra);
+                  //  print("Pozicija koja bi se sad trebala odigrati" + PozicijaNaKojuIgracOdigra);
                     NajvecaKarta.transform.SetParent(PozicijaNaKojuIgracOdigra.transform);
                     NajvecaKarta.transform.position = PozicijaNaKojuIgracOdigra.transform.position;
                 }
@@ -1165,7 +1231,7 @@ public class Ai : MonoBehaviour
                 {
                     Selectable PokaziKartu = NajmanjaKarta.GetComponent<Selectable>();
                     PokaziKartu.KartaOkrenutaPremaGore = true;
-                    print("Pozicija koja bi se sad trebala odigrati" + PozicijaNaKojuIgracOdigra);
+                  //  print("Pozicija koja bi se sad trebala odigrati" + PozicijaNaKojuIgracOdigra);
                     NajmanjaKarta.transform.SetParent(PozicijaNaKojuIgracOdigra.transform);
                     NajmanjaKarta.transform.position = PozicijaNaKojuIgracOdigra.transform.position;
                 }
@@ -1174,7 +1240,7 @@ public class Ai : MonoBehaviour
             {
                 Selectable PokaziKartu = NajvecaKarta.GetComponent<Selectable>();
                 PokaziKartu.KartaOkrenutaPremaGore = true;
-                print("Pozicija koja bi se sad trebala odigrati" + PozicijaNaKojuIgracOdigra);
+              //  print("Pozicija koja bi se sad trebala odigrati" + PozicijaNaKojuIgracOdigra);
                 NajvecaKarta.transform.SetParent(PozicijaNaKojuIgracOdigra.transform);
                 NajvecaKarta.transform.position = PozicijaNaKojuIgracOdigra.transform.position;
             } 
@@ -1386,9 +1452,9 @@ public class Ai : MonoBehaviour
                     SljedeciIgrac = GameObject.Find(ImeSljedecegIgraca);                                      
                     GameObject TrenutnaKarta = Pozicija.transform.GetChild(0).gameObject;
                     Ai TrenutnaKartaAi = TrenutnaKarta.GetComponent<Ai>();
-                    print("Prva Odigrana Karta je " + PrvaOdigrana.name);
-                    print("Trenutna Karta je " + TrenutnaKarta.name);
-                    print("Sljedeci igrac je : " + SljedeciIgrac.name);
+                    //print("Prva Odigrana Karta je " + PrvaOdigrana.name);
+                   // print("Trenutna Karta je " + TrenutnaKarta.name);
+                  //  print("Sljedeci igrac je : " + SljedeciIgrac.name);
                     Ai PrvaOdigranaAi = PrvaOdigrana.GetComponent<Ai>();
                     if (SljedecaPozicija.transform.GetChildCount() == 0)
                     {
@@ -1671,7 +1737,7 @@ public class Ai : MonoBehaviour
                         PokaziKartu.KartaOkrenutaPremaGore = true;
                         NajmanjaKartaUIstojBoji.transform.SetParent(SljedecaPozicijaNaReduOdigranoIgrac.transform);
                         NajmanjaKartaUIstojBoji.transform.position = SljedecaPozicijaNaReduOdigranoIgrac.transform.position;
-                    print("Odbaci Najmanju kartu u istoj boji " + SljedecaPozicijaNaReduOdigranoIgrac.name);
+                   // print("Odbaci Najmanju kartu u istoj boji " + SljedecaPozicijaNaReduOdigranoIgrac.name);
                     }
                     else
                     {
@@ -1679,7 +1745,7 @@ public class Ai : MonoBehaviour
                         PokaziKartu.KartaOkrenutaPremaGore = true;
                         NajvecaKartaUIstojBoji.transform.SetParent(SljedecaPozicijaNaReduOdigranoIgrac.transform);
                         NajvecaKartaUIstojBoji.transform.position = SljedecaPozicijaNaReduOdigranoIgrac.transform.position;
-                    print("Odbaci nema najmanje karte u istoj boji odbaci veču " + SljedecaPozicijaNaReduOdigranoIgrac.name);
+                   // print("Odbaci nema najmanje karte u istoj boji odbaci veču " + SljedecaPozicijaNaReduOdigranoIgrac.name);
                 }
                 }
                 else if (NajvecaKartaDoSad.RangKarte < NajvecaKartaUIstojBojiAi.RangKarte)
@@ -1688,7 +1754,7 @@ public class Ai : MonoBehaviour
                     PokaziKartu.KartaOkrenutaPremaGore = true;
                     NajvecaKartaUIstojBoji.transform.SetParent(SljedecaPozicijaNaReduOdigranoIgrac.transform);
                     NajvecaKartaUIstojBoji.transform.position = SljedecaPozicijaNaReduOdigranoIgrac.transform.position;
-                    print("Odbaci najvecu kartu u istoj boji " + SljedecaPozicijaNaReduOdigranoIgrac.name);
+                   // print("Odbaci najvecu kartu u istoj boji " + SljedecaPozicijaNaReduOdigranoIgrac.name);
 
             }
 
@@ -1699,7 +1765,7 @@ public class Ai : MonoBehaviour
                 PokaziKartu.KartaOkrenutaPremaGore = true;
                 NajveciAdut.transform.SetParent(SljedecaPozicijaNaReduOdigranoIgrac.transform);
                 NajveciAdut.transform.position = SljedecaPozicijaNaReduOdigranoIgrac.transform.position;
-                print("Odbaci najvecu kartu u adutu " + SljedecaPozicijaNaReduOdigranoIgrac.name);
+                //print("Odbaci najvecu kartu u adutu " + SljedecaPozicijaNaReduOdigranoIgrac.name);
 
         }
             else if (NajmanjaKatraVanBoje != null)
@@ -1709,7 +1775,7 @@ public class Ai : MonoBehaviour
                 PokaziKartu.KartaOkrenutaPremaGore = true;
                 NajmanjaKatraVanBoje.transform.SetParent(SljedecaPozicijaNaReduOdigranoIgrac.transform);
                 NajmanjaKatraVanBoje.transform.position = SljedecaPozicijaNaReduOdigranoIgrac.transform.position;
-                print("Odbaci najmanju kartu u različitoj boji " + SljedecaPozicijaNaReduOdigranoIgrac.name);
+               // print("Odbaci najmanju kartu u različitoj boji " + SljedecaPozicijaNaReduOdigranoIgrac.name);
             
         }
 

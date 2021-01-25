@@ -42,7 +42,7 @@ public class UserInput : MonoBehaviour
 
                     Odabrano1 = odabrano.collider.gameObject;
                     Odabrano1.transform.position = new Vector3(Odabrano1.transform.position.x, Odabrano1.transform.position.y, Odabrano1.transform.position.z - 1);                 
-                    print("povecaj kartu");
+                   // print("povecaj kartu");
                     brojacKlikova++;                 
                     return;
                 }
@@ -55,13 +55,13 @@ public class UserInput : MonoBehaviour
                         Odabrano1.transform.position = new Vector3(Odabrano1.transform.position.x, Odabrano1.transform.position.y, Odabrano1.transform.position.z + 1);
                         Odabrano2.transform.position = new Vector3(Odabrano2.transform.position.x, Odabrano2.transform.position.y, Odabrano2.transform.position.z - 1);
                         brojacKlikova = 2;
-                        print("Smanji kartu i povečaj drugu");
+                       // print("Smanji kartu i povečaj drugu");
                         Odabrano1 = Odabrano2;                
                         return;
                     }
                     else if ((Odabrano1 == Odabrano2))
                     {
-                        print("Premjesti kartu gore");
+                       // print("Premjesti kartu gore");
                         odabrano.transform.SetParent(OdigranoPozicija1);
                         odabrano.transform.position = OdigranoPozicija1.position;
                         odabrano.transform.localScale = new Vector3(2, 2, 1);
