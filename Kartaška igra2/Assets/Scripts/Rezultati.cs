@@ -15,11 +15,18 @@ public class Rezultati : MonoBehaviour
     public TextMeshProUGUI RezultatVi;
     public TextMeshProUGUI RezultatMiSveukupno;
     public TextMeshProUGUI RezultatViSveukupno;
-    
-    
+
+    public TextMeshProUGUI TextIgrac1;
+    public TextMeshProUGUI TextIgrac2;
+    public TextMeshProUGUI TextIgrac3;
+    public TextMeshProUGUI TextIgrac4;
+ 
+
     // Start is called before the first frame update
     void Start()
     {
+        ProvjeriDaliNaziviIgracaPostojeIDodaj();
+
         Spremanje.StariRezultatMi = Spremanje.RezultatMi;
         Spremanje.StariRezultatVi = Spremanje.RezultatVi;
         
@@ -41,6 +48,46 @@ public class Rezultati : MonoBehaviour
         BrojiRezultatStalnoVi(IgraciDvaiCetri, Rezultat2i4);
         BrojiRezultatStalnoMi(IgraciJedaniTri, Rezultat1i3);
     }
+
+    private void ProvjeriDaliNaziviIgracaPostojeIDodaj()
+    {
+        if(Spremanje.Igrac1 != null)
+        {
+            TextIgrac1.SetText(Spremanje.Igrac1);
+        }
+        else
+        {
+            TextIgrac1.SetText("Igrac 1");
+        }
+
+        if (Spremanje.Igrac2 != null)
+        {
+            TextIgrac2.SetText(Spremanje.Igrac2);
+        }
+        else
+        {
+            TextIgrac2.SetText("Igrac 2");
+        }
+
+        if (Spremanje.Igrac3 != null)
+        {
+            TextIgrac3.SetText(Spremanje.Igrac3);
+        }
+        else
+        {
+            TextIgrac3.SetText("Igrac 3");
+        }
+
+        if (Spremanje.Igrac4 != null)
+        {
+            TextIgrac4.SetText(Spremanje.Igrac4);
+        }
+        else
+        {
+            TextIgrac4.SetText("Igrac 4");
+        }
+
+    }
     
     public void BrojiRezultatStalnoMi(GameObject Igraci, TextMeshProUGUI Rezultat)
     {
@@ -56,7 +103,7 @@ public class Rezultati : MonoBehaviour
                 
             }
  
-            Rezultat.SetText(Ai.ZvanjaVi.ToString()+" + "+rezultat.ToString());
+            Rezultat.SetText(Ai.ZvanjaMi.ToString()+" + "+rezultat.ToString());
         }
     }
     public void BrojiRezultatStalnoVi(GameObject Igraci, TextMeshProUGUI Rezultat)

@@ -16,8 +16,13 @@ public static class  Spremanje
     public static int RezultatViSveukupno = 0;
     public static int StariRezultatViSveukupno = 0;
 
-    public static int IgracKojiSadaZove = 1;
-    
+    public static int IgracKojiSadaZove = 2;
+
+    public static string Igrac1 ;
+    public static string Igrac2 ;
+    public static string Igrac3 ;
+    public static string Igrac4 ;
+    public static Sprite IgracaPloca = Resources.Load<Sprite>("IgracaPloca1");
     
 
 

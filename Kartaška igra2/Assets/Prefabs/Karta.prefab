@@ -124,9 +124,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OdigranoPozicija1: {fileID: 0}
+  OdigranoPozicija2: {fileID: 0}
+  OdigranoPozicija3: {fileID: 0}
+  OdigranoPozicija4: {fileID: 0}
+  Igrac1: {fileID: 0}
+  Igrac2: {fileID: 0}
+  Igrac3: {fileID: 0}
+  Igrac4: {fileID: 0}
+  IgraciJedanITri: {fileID: 0}
+  IgraciDvaiCetri: {fileID: 0}
+  TkoJeZvao: {fileID: 0}
+  IgracKojiJeZvao: {fileID: 0}
+  SlikaAduta: {fileID: 0}
+  SlikeAduta: []
+  TextDalje: {fileID: 0}
   BojaKarte: 
   NazivKarte: 
+  RangZvanja: 0
   RangKarte: 0
   VrijednostKarte: 0
+  BojaAduta: 
   Adut: 0
-  PrviNaRedu: 1
+  NaRedu: 1
+  BrojacRunda: 0
+  Zvanja: 0
+  IgracKojiPrviZove: {fileID: 0}
+  IgracKojiTrenutnoZove: {fileID: 0}
+  IgracKojiZoveSljedeci: {fileID: 0}
+  IgracNaMusu: {fileID: 0}
+  SljedecaScena: BelaScen1
+  Rezultat1i3: {fileID: 0}
+  Rezultat2i4: {fileID: 0}
+  ZoviAdutPloca: {fileID: 0}
+  ZoviDaljeButton: {fileID: 0}
+  PrvaOdigranaKartaURundi: {fileID: 0}
