@@ -21,42 +21,11 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
         
     }
     private void Start()
-    {
-        /*PokreniJednom = false;
-        
-        StartCoroutine(PopuniArreyKatePozicije());*/
+    {       
+       
     }
-    private void Update()
-    {    
-       /* if (PokreniJednom == true)
-        {
-
-            for (int i = 0; i < Kartae.Length; i++)
-            {
-                if (PozicijaKarte[i] != Kartae[i].transform.position)
-                {
-                    Zvuk[1].Play();                  
-                    PozicijaKarte[i] = Kartae[i].transform.position;
-                }
-            }
-            
-        }*/
-        
-    }
-    /*public IEnumerator PopuniArreyKatePozicije()
-    {        
-        yield return new WaitForSecondsRealtime(5);        
-        Kartae = GameObject.FindGameObjectsWithTag("Karta");
-        PozicijaKarte = new Vector3[33];
-        for (int i = 0; i < Kartae.Length; i++)
-        {
-
-            print(Kartae[i].name);
-            PozicijaKarte.SetValue(Kartae[i].transform.position, i);    
-        }
-        PokreniJednom = true;
-    }*/
-
+  
+    
     private void PodesiZvukIMelodijeVolumen()
     {
         float MelodijaVolumenFloat = PlayerPrefs.GetFloat(MelodijaVolumen);       

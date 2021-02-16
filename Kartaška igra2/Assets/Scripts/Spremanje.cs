@@ -16,8 +16,11 @@ public static class  Spremanje
     public static int RezultatViSveukupno = 0;
     public static int StariRezultatViSveukupno = 0;
 
-    public static int IgracKojiSadaZove = 2;
+    public static int IgracKojiSadaZove = 1;
 
+    public static GameObject NajacaKartaDoSad;
+    public static GameObject PrvaOdigranaKarta;
+    public static GameObject IgracKojiJeSadNaRedu;
     public static string Igrac1 ;
     public static string Igrac2 ;
     public static string Igrac3 ;

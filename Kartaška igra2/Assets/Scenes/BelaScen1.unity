@@ -3327,6 +3327,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OdigranoPozicija1: {fileID: 1687434301}
+  Igrac1: {fileID: 1408921405}
+  OdigranoPozicija1GameObject: {fileID: 1687434300}
+  OdigranoPozicija1GameObjectIgrac4: {fileID: 904708262}
 --- !u!114 &711177999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13279,6 +13282,11 @@ PrefabInstance:
     - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
         type: 3}
       propertyPath: OdbaciKartu
+      value: 
+      objectReference: {fileID: 502671630}
+    - target: {fileID: 286918945977928783, guid: cb8a684c24bc9d14789fa21a693b5372,
+        type: 3}
+      propertyPath: OdbaciKartuAudio
       value: 
       objectReference: {fileID: 502671630}
     - target: {fileID: 1388218056349210213, guid: cb8a684c24bc9d14789fa21a693b5372,
