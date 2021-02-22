@@ -21,12 +21,17 @@ public static class  Spremanje
     public static GameObject NajacaKartaDoSad;
     public static GameObject PrvaOdigranaKarta;
     public static GameObject IgracKojiJeSadNaRedu;
+
     public static string Igrac1 ;
     public static string Igrac2 ;
     public static string Igrac3 ;
     public static string Igrac4 ;
+
     public static Sprite IgracaPloca = Resources.Load<Sprite>("IgracaPloca1");
-    
+
+    public static bool BelaJeZvana = false;
+
+    public static GameObject PozicijaKojaMoraBitiPopunjenaPrvo = null;
 
 
 }

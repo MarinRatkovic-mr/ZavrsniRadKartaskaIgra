@@ -42,7 +42,7 @@ public class UserInput : MonoBehaviour
         RaycastHit2D odabrano = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         List<GameObject> KarteKojeSeSmijukliknuti = ListaKarataKojeIgracSmijeKliknuti();
              
-        print("Radi");
+       
         if (Input.GetMouseButtonDown(0))
         {
             if (KarteKojeSeSmijukliknuti != null)
@@ -109,9 +109,6 @@ public class UserInput : MonoBehaviour
         
          if (PrvaOdigrana != null && NajacaOdigrana != null)
         {
-            print(PrvaOdigrana.name);
-            print(NajacaOdigrana.name);
-
             Ai PrvaOdigranaAi = PrvaOdigrana.GetComponent<Ai>();
             Ai NajacaOdigranaAi = NajacaOdigrana.GetComponent<Ai>();
 

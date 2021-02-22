@@ -109,7 +109,7 @@ public class Bela : MonoBehaviour
         {
                 
                     yield return new WaitForSeconds(0.06f);
-            GameObject novaKarta = Instantiate(KartePrefab,new Vector3(PozicijaIgraca[i].transform.position.x -xOffset, PozicijaIgraca[i].transform.position.y - yOffset,PozicijaIgraca[i].transform.position.z + zOffset), Quaternion.Euler(0f, 0f, PozicijaIgraca[i].transform.localRotation.z +zAngle),PozicijaIgraca[i].transform);
+            GameObject novaKarta = Instantiate(KartePrefab,new Vector3(PozicijaIgraca[i].transform.position.x -xOffset, PozicijaIgraca[i].transform.position.y - yOffset,PozicijaIgraca[i].transform.position.z + zOffset), Quaternion.Euler(0f, 0f, /*PozicijaIgraca[i].transform.localRotation.z +*/zAngle),PozicijaIgraca[i].transform);
                 
                 novaKarta.name = karta;
                 
@@ -127,21 +127,21 @@ public class Bela : MonoBehaviour
                {
                     
                     if (karta == Igrac1[b])
-                   {
+                    {
                         
                         zOffset = zOffset + 0.03f;
-                        xOffset = xOffset - 2f;
+                        xOffset = xOffset - 2.7f;
                         zAngle = 0f;
 
                     }
-                     if(karta == Igrac2[b])
-                     {
-                        
+                    else if(karta == Igrac2[b])
+                    {
+                        print("KartaIgrac2");
                         zAngle =  90f;
                         zOffset = zOffset + 0.03f;
                         yOffset = yOffset + 1.5f;                                                
                         
-                     }
+                    }
                     else if (karta == Igrac3[b])
                     {
                         zOffset = zOffset + 0.03f;
