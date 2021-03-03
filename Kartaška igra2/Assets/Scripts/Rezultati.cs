@@ -22,7 +22,7 @@ public class Rezultati : MonoBehaviour
     public TextMeshProUGUI TextIgrac4;
  
 
-    // Start is called before the first frame update
+  
     void Start()
     {
         ProvjeriDaliNaziviIgracaPostojeIDodaj();
@@ -41,7 +41,6 @@ public class Rezultati : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -49,6 +48,7 @@ public class Rezultati : MonoBehaviour
         BrojiRezultatStalnoMi(IgraciJedaniTri, Rezultat1i3);
     }
 
+    /*Ako je korisnik igre promjenio nazive igrača u postavcima u glavnom meniu doda te nazive igračima.*/
     private void ProvjeriDaliNaziviIgracaPostojeIDodaj()
     {
         if(Spremanje.Igrac1 != null)
@@ -88,7 +88,7 @@ public class Rezultati : MonoBehaviour
         }
 
     }
-    
+    /*Stalno broji osvojene karte kod igrača koji igra i Ai igrača 3*/
     public void BrojiRezultatStalnoMi(GameObject Igraci, TextMeshProUGUI Rezultat)
     {
        
@@ -106,6 +106,7 @@ public class Rezultati : MonoBehaviour
             Rezultat.SetText(Ai.ZvanjaMi.ToString()+" + "+rezultat.ToString());
         }
     }
+    /*Stalno broji osvojene karte kod igrača koji Ai igrača 2 i Ai igrača 4*/
     public void BrojiRezultatStalnoVi(GameObject Igraci, TextMeshProUGUI Rezultat)
     {
 
@@ -122,7 +123,7 @@ public class Rezultati : MonoBehaviour
             Rezultat.SetText(Ai.ZvanjaVi.ToString()+" + "+rezultat.ToString());
         }
     }
-
+    /*Na kraju partije postavlja rezultat sa zvanjima i svime za igrača koji igra i Ai igrača 3.*/
     public static void PostaviNoviRezultatMi(int VrijednostTrenutnogRezultataIgraci1i3)
     {
         int stariRezultat = Spremanje.StariRezultatMi;         
@@ -131,13 +132,15 @@ public class Rezultati : MonoBehaviour
         if(noviRezultat >= 1001)
         {
             int stariRezultatiMiSveukupno = Spremanje.StariRezultatMiSveukupno;
-            int noviRezultatMiSveukupno = stariRezultatiMiSveukupno + 1;
+            int noviRezultatMiSveukupno = stariRezultatiMiSveukupno + 1;   
+            Spremanje.RezultatMiSveukupno = noviRezultatMiSveukupno;  
+            Spremanje.RezultatVi = 0; 
             Spremanje.RezultatMi = 0;
-            Spremanje.RezultatVi = 0;
-            Spremanje.RezultatMiSveukupno = noviRezultatMiSveukupno;         
+                   
         }
     }
 
+    /*Na kraju partije postavlja rezultat sa zvanjima i svime za Ai igrača 2 Ai igrača 4.*/
     public static void PostaviNoviRezultatVi(int VrijednostTrenutnogRezultataIgraci1i3)
     {
         int stariRezultat = Spremanje.StariRezultatVi;
@@ -147,9 +150,9 @@ public class Rezultati : MonoBehaviour
         {
             int stariRezultatiViSveukupno = Spremanje.StariRezultatViSveukupno;
             int noviRezultatViSveukupno = stariRezultatiViSveukupno + 1;
+            Spremanje.RezultatViSveukupno = noviRezultatViSveukupno;
             Spremanje.RezultatMi = 0;
             Spremanje.RezultatVi = 0;
-            Spremanje.RezultatViSveukupno = noviRezultatViSveukupno;
         }
     }
 }

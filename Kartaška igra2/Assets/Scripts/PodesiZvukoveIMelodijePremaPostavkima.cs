@@ -25,7 +25,7 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
        
     }
   
-    
+    /*Postavlja vrijednosti zvuka i melodije prilikom početka scene bela.*/
     private void PodesiZvukIMelodijeVolumen()
     {
         float MelodijaVolumenFloat = PlayerPrefs.GetFloat(MelodijaVolumen);       
@@ -63,6 +63,8 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
 
         
     }
+    /*Odlučuje rotaciju teksta ukoliko je text "7" ili "x" 
+     taj text koristim kao kvačicu pomoču koje možeš stišati zvuk dokraja iliopet vratiti zadani.*/
     public void PostaviText(TextMeshProUGUI x7Text)
     {
         if (x7Text.text == "7" )
@@ -75,10 +77,8 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
         }
 
 
-    }
-    
-
-    
+    }    
+    /*Mute i unmute za Melodiju*/
     public void AkoGumbPritisnutMelodija()
     {
         if(x7Melodija.text == "7")
@@ -101,6 +101,7 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
         }
     }
 
+    /*Mute unmute za Zvuk*/
     public void AkoGumbPritisnutZvuk()
     {
         if (x7Zvuk.text == "7")
@@ -123,7 +124,7 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
         }
     }
 
-
+    /*Mute melodija*/
     public void MelodijaSmanjiDoKraja()
     {
         Melodija.volume = 0f;
@@ -131,12 +132,14 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
         
     }
 
+    /*Unmute melodija*/
     public void MelodijaPojacaj()
     {
         Melodija.volume = 0.5f;
         PlayerPrefs.SetFloat(MelodijaVolumen, Melodija.volume);
     }
 
+    /*Mute zvuk*/
     public void ZvukSmanjiDoKraja()
     {
         for (int i = 0; i < Zvuk.Length; i++)
@@ -145,6 +148,7 @@ public class PodesiZvukoveIMelodijePremaPostavkima : MonoBehaviour
             PlayerPrefs.SetFloat(ZvukVolumen, Zvuk[i].volume);
         }
     }
+    /*Unmute zvuk*/
 
     public void ZvukPojacaj()
     {

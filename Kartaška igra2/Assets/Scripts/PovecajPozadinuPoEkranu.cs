@@ -10,6 +10,8 @@ public class PovecajPozadinuPoEkranu : MonoBehaviour
     public Sprite Ploca3;
     public Sprite Ploca4;
     
+    /*Ova cijela skripta se koristi da se pozadina prilagodi igračoj ploči pokrene se kod ulaska u igru.
+     sav kod nalazi se u metodi start.*/
     void Start()
     {
         if (Spremanje.IgracaPloca != null)

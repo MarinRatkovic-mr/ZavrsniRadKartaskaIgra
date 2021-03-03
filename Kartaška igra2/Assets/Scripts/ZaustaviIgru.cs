@@ -36,7 +36,7 @@ public class ZaustaviIgru : MonoBehaviour
         }
 
     }
-
+    /*Ako je igra pauzirana nastavlja igru.*/
     public void NastaviIgru()
     {
         IskocniProzorIzadi.SetActive(false);
@@ -46,7 +46,7 @@ public class ZaustaviIgru : MonoBehaviour
     
         
     }
-
+    /*Ako je igra u toku i metoda pozvana igra je pauzirana.*/
     public void ZaustaviiIgru()
     {
         IskocniProzorIzadi.SetActive(true);

@@ -29,17 +29,19 @@ public class Postavke : MonoBehaviour
     public AudioSource Melodija;
     public AudioSource[] Zvuk;
 
+    /*Posprema postavke zvuka preko Prefaba*/
   public void SpremiPostavkeZvuka()
     {
         PlayerPrefs.SetFloat(MelodijaVolumen, VolumenMelodije.value);
         PlayerPrefs.SetFloat(ZvukVolumen, VolumenZvuka.value);
                     
     }
-
+    /*Ako se na slajderu melodija u postavcima promjeni vrijednost jačina zvuka melodije se automatski podesi*/
     public void PromjeniJacinuZvukaSliderMelodija()
     {
         Melodija.volume = VolumenMelodije.value;    
     }
+    /*Ako se na slajderu jacina zvuka u postavcima promjeni vrijednost jačina zvuka se automatski podesi*/
     public void PromjeniJacinuZvukaSliderZvuk()
     {       
         for (int i = 0; i < Zvuk.Length; i++)
@@ -76,7 +78,7 @@ public class Postavke : MonoBehaviour
         
 
     }
-
+    /*Vrača prije zadane postavke koje je igrač postavio*/
     public void LoadPostavke()
     {
         string igrac1 =  PlayerPrefs.GetString("Igrac1 ime");
@@ -110,7 +112,7 @@ public class Postavke : MonoBehaviour
         }
 
     }
-   
+   /*Spremanje postavka*/
     public void SpremiVrijednostiStalno()
     {
         PlayerPrefs.SetString("Igrac1 ime", Igracc1.text);
@@ -120,7 +122,7 @@ public class Postavke : MonoBehaviour
         PlayerPrefs.SetString("Odabrana ploca ime", OdabranaPloca.name);
         PlayerPrefs.Save();
     }
-    
+    /*Korištenje skripte spremanje radi da spremi imena igrača radi lakšeg pristupa varijablima.*/
     public void SpremiPostavkeIgre()
     {
         if(Igrac1 != Igracc1.text)
@@ -149,16 +151,17 @@ public class Postavke : MonoBehaviour
         }
         SpremiPostavkeZvuka();
     }
-
+    /*U postavcima igrač odabite pozadinu ili "igraču ploču" te se spremi.*/
     public void OdaberiPlocu(Sprite SpriteOdabranePloce)
     {
         OdabranaPloca = SpriteOdabranePloce;
     }
-
+    /*Metoda koja pokazuje igraču da su izmjenjene postavke spremljene*/
     public void PrikaziSpremljeno()
     {
         StartCoroutine(PrikaziDaSuPromjeneSpremljene());
     }
+    /*Nakratko prikazuje tekst "Postavke su spremljene".*/
     public IEnumerator PrikaziDaSuPromjeneSpremljene()
     {
         yield return new WaitForSecondsRealtime(1);
@@ -166,7 +169,7 @@ public class Postavke : MonoBehaviour
         yield return new WaitForSecondsRealtime(2);
         OptionsText.text = "OPTIONS";
     }
-
+    /*Ploča u postavcima koja je odabrana mijenja boju.*/
     public void PlocaMjenjaBoju(Button GumbUKojemJeTrenutnoPostavljenaPloca)
     {
         OdabranaPloca = GumbUKojemJeTrenutnoPostavljenaPloca.GetComponent<Image>().sprite;

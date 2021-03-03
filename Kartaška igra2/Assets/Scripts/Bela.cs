@@ -12,6 +12,7 @@ public class Bela : MonoBehaviour
     //Poravnanje karata prema pozicijama igrača tjekom djeljenja
     public GameObject[] PozicijaIgraca;
     public GameObject[] PozicijaIgracaOdigrano;
+    public AudioSource MjesanjeKarataAudio;
 
     public static string[] boje = new string[] {"Zel","Src","Tik","Zir" };
     public static string[] vrijednosti = new string[] { "7", "8", "9", "10","Decko","Baba","Kralj","As" };
@@ -99,68 +100,68 @@ public class Bela : MonoBehaviour
     {
         
         for (int i = 0; i < Igraci.Length; i++) {
-            
-            float zAngle = 0f;
-
-            float yOffset = 0;
-            float zOffset = 0;
-            float xOffset = 0;
-        foreach(string karta in Igraci[i].ToArray())
-        {
-                
-                    yield return new WaitForSeconds(0.06f);
-            GameObject novaKarta = Instantiate(KartePrefab,new Vector3(PozicijaIgraca[i].transform.position.x -xOffset, PozicijaIgraca[i].transform.position.y - yOffset,PozicijaIgraca[i].transform.position.z + zOffset), Quaternion.Euler(0f, 0f, /*PozicijaIgraca[i].transform.localRotation.z +*/zAngle),PozicijaIgraca[i].transform);
-                
+            MjesanjeKarataAudio.Play();
+            float zRotacija = 0f;
+            float yPomak = 0;
+            float zPomak = 0;
+            float xPomak = 0;
+            foreach (string karta in Igraci[i].ToArray())
+            {
+             
+                yield return new WaitForSeconds(0.06f);
+                GameObject novaKarta = Instantiate(KartePrefab, new Vector3(PozicijaIgraca[i].transform.position.x - xPomak, PozicijaIgraca[i].transform.position.y - yPomak, PozicijaIgraca[i].transform.position.z + zPomak), Quaternion.Euler(0f, 0f, PozicijaIgraca[i].transform.localRotation.z + zRotacija), PozicijaIgraca[i].transform);
+  
                 novaKarta.name = karta;
-                
+                for (int a = 0; a < 6; a++)
+                {
+                    if (karta == Igrac1[a])
+                    {
 
-                for (int a = 0; a < 6; a++) 
-                { 
-                  if(karta == Igrac1[a]) 
-                  { 
-                    
-                     novaKarta.GetComponent<Selectable>().KartaOkrenutaPremaGore = true;
-                  }
+                        novaKarta.GetComponent<Selectable>().KartaOkrenutaPremaGore = true;
+                    }
                 }
 
-               for(int b = 0; b < 8; b++) 
-               {
-                    
+                for (int b = 0; b < 8; b++)
+                {
+
                     if (karta == Igrac1[b])
                     {
-                        
-                        zOffset = zOffset + 0.03f;
-                        xOffset = xOffset - 2.7f;
-                        zAngle = 0f;
+
+                        zPomak = zPomak + 0.03f;
+                        xPomak = xPomak - 2.7f;
+                        zRotacija = 0f;
 
                     }
-                    else if(karta == Igrac2[b])
+                    else if (karta == Igrac2[b])
                     {
-                        print("KartaIgrac2");
-                        zAngle =  90f;
-                        zOffset = zOffset + 0.03f;
-                        yOffset = yOffset + 1.5f;                                                
-                        
+                       
+                        zRotacija = 90f;
+                        zPomak = zPomak + 0.03f;
+                        yPomak = yPomak + 1.5f;
+
                     }
                     else if (karta == Igrac3[b])
                     {
-                        zOffset = zOffset + 0.03f;
-                        xOffset = xOffset + 2f;
-                        zAngle = 0;
+                        zPomak = zPomak + 0.03f;
+                        xPomak = xPomak + 2f;
+                        zRotacija = 0;
                     }
-                    else if(karta == Igrac4[b])
+                    else if (karta == Igrac4[b])
                     {
-                        zAngle = 90f;
-                        zOffset = zOffset + 0.03f;
-                        yOffset = yOffset - 1.5f;
+                        zRotacija = 90f;
+                        zPomak = zPomak + 0.03f;
+                        yPomak = yPomak - 1.5f;
                     }
-               }
-                
-               
-        }
-      }
-    }
+                }
 
+                
+
+
+            }
+            MjesanjeKarataAudio.Stop();
+        }
+    }
+    // Uzima 8 karata za svakog igrača od kraja špila
     void BelaSortiraj()
     {
         int a = 0;
@@ -178,4 +179,6 @@ public class Bela : MonoBehaviour
     }
 
     
+
+
 }

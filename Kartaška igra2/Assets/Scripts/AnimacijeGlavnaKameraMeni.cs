@@ -15,7 +15,8 @@ public class AnimacijeGlavnaKameraMeni : MonoBehaviour
         GlavnaKamera = GetComponent<Animator>();
         
     }
-
+    /*-----------------*/
+    /*Metode koje kad se pozovu pokrenu animacije na glavnoj kameri u glavnom izborniku. */
     public void PomakniKameruPremaPostvkama()
     {
         GlavnaKamera.Play("RotirajNaPostavke");       
@@ -28,4 +29,5 @@ public class AnimacijeGlavnaKameraMeni : MonoBehaviour
     {
         GlavnaKamera.Play("PribliziLogo");
     }
+    /*-----------------*/
 }

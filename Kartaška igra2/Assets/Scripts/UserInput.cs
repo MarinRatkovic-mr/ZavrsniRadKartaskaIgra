@@ -13,10 +13,10 @@ public class UserInput : MonoBehaviour
     public GameObject Igrac1;
     public GameObject OdigranoPozicija1GameObject;
     public GameObject OdigranoPozicija1GameObjectIgrac4;
+    public AudioSource OdbaciKartuAudio;
 
-   
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,30 +26,28 @@ public class UserInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
         if (Spremanje.IgracKojiJeSadNaRedu == Igrac1 || OdigranoPozicija1GameObjectIgrac4.transform.childCount == 1 && OdigranoPozicija1GameObject.transform.childCount <2 )
         {
             KartaOdabrana();         
         }
-    }
-/*Ako karta na koju kliknemo ima naziv "Karta" te se nalazi na poziciji "Igrac1".
-  Izvrši se povecanje kliknute karte         
-                 */
-    public void KartaOdabrana()
-    {
+      
         
-       // Vector3 pozicijaMisa = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
+    }
+
+/*Ako karta na koju kliknemo ima naziv "Karta" te se nalazi na poziciji "Igrac1" i tu kartu smijemo odbaciti prema pravilima bele
+  Izvrši se povecanje kliknute karte te ako ista karta bude kliknuta dvaput karta se odbaci.*/         
+                 
+    public void KartaOdabrana()
+    {     
         RaycastHit2D odabrano = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         List<GameObject> KarteKojeSeSmijukliknuti = ListaKarataKojeIgracSmijeKliknuti();
-             
+                  
        
         if (Input.GetMouseButtonDown(0))
         {
             if (KarteKojeSeSmijukliknuti != null)
-            {
-                
-                
-               
+            {               
                 if (odabrano.collider.CompareTag("Karta") && odabrano.transform.IsChildOf(Igrac1.transform) == true && OdigranoPozicija1GameObject.transform.GetChildCount() < 1 && KarteKojeSeSmijukliknuti.Contains(odabrano.collider.gameObject))
                 {
                    
@@ -58,8 +56,7 @@ public class UserInput : MonoBehaviour
                     {
 
                         Odabrano1 = odabrano.collider.gameObject;
-                        Odabrano1.transform.position = new Vector3(Odabrano1.transform.position.x, Odabrano1.transform.position.y, Odabrano1.transform.position.z - 1);
-                        // print("povecaj kartu");
+                        Odabrano1.transform.position = new Vector3(Odabrano1.transform.position.x, Odabrano1.transform.position.y+1, Odabrano1.transform.position.z - 1);                      
                         brojacKlikova++;
                         return;
                     }
@@ -69,21 +66,22 @@ public class UserInput : MonoBehaviour
 
                         if (Odabrano1 != Odabrano2)
                         {
-                            Odabrano1.transform.position = new Vector3(Odabrano1.transform.position.x, Odabrano1.transform.position.y, Odabrano1.transform.position.z + 1);
-                            Odabrano2.transform.position = new Vector3(Odabrano2.transform.position.x, Odabrano2.transform.position.y, Odabrano2.transform.position.z - 1);
+                            Odabrano1.transform.position = new Vector3(Odabrano1.transform.position.x, Odabrano1.transform.position.y-1, Odabrano1.transform.position.z + 1);
+                            Odabrano2.transform.position = new Vector3(Odabrano2.transform.position.x, Odabrano2.transform.position.y+1, Odabrano2.transform.position.z - 1);
                             brojacKlikova = 2;
-                            // print("Smanji kartu i povečaj drugu");
+                           
                             Odabrano1 = Odabrano2;
                             return;
                         }
                         else if ((Odabrano1 == Odabrano2))
                         {
-                            // print("Premjesti kartu gore");
+                          
                             odabrano.transform.SetParent(OdigranoPozicija1);
                             odabrano.transform.position = OdigranoPozicija1.position;
                             odabrano.transform.localScale = new Vector3(2, 2, 1);
                             brojacKlikova = 1;
-
+                            OdbaciKartuAudio.Play();
+                           
                             return;
                         }
                     }
@@ -94,7 +92,7 @@ public class UserInput : MonoBehaviour
         }
         
     }
-
+    /*Vrača listu karata koje igrač smije odigrati u ovom krugu partije.*/
 
     public List<GameObject> ListaKarataKojeIgracSmijeKliknuti()
     {
@@ -106,7 +104,7 @@ public class UserInput : MonoBehaviour
 
         GameObject PrvaOdigrana = Spremanje.PrvaOdigranaKarta;
         GameObject NajacaOdigrana = Spremanje.NajacaKartaDoSad;
-        
+       
          if (PrvaOdigrana != null && NajacaOdigrana != null)
         {
             Ai PrvaOdigranaAi = PrvaOdigrana.GetComponent<Ai>();
