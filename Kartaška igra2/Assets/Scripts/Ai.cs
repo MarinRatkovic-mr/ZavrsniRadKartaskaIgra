@@ -1478,14 +1478,10 @@ public class Ai : MonoBehaviour
         int VrijednostZir = 0;
         int VrijednostTik = 0;
         int VrijednostZel = 0;
-
         int BrojKartaSrc = 0;
         int BrojKartaZir = 0;
         int BrojKartaZel = 0;
         int BrojKartaTik = 0;
-
-
-
         List<GameObject> SveKarteURuciIgraca = new List<GameObject>();
 
         for (int i = 0; i < IgracNaReduZaZvanje.transform.childCount - 2; i++)
@@ -1562,25 +1558,25 @@ public class Ai : MonoBehaviour
             }
         }
 
-        if (VrijednostSrc > 40 || BrojKartaSrc > 4)
+        if (VrijednostSrc > 34 || BrojKartaSrc > 4)
         {
             PostaviVrijednostiAduta("Src");
             PozvanoSrce(IgracKojiTrenutnoZove);
             
         }
-        else if (VrijednostTik > 40 || BrojKartaTik > 5)
+        else if (VrijednostTik > 34 || BrojKartaTik > 4)
         {
             PostaviVrijednostiAduta("Tik");
             PozvanoTikva(IgracKojiTrenutnoZove);
            
         }
-        else if (VrijednostZel > 40 || BrojKartaZel > 5)
+        else if (VrijednostZel > 34 || BrojKartaZel > 4)
         {
             PostaviVrijednostiAduta("Zel");
             PozvanoZelje(IgracKojiTrenutnoZove);
            
         }
-        else if (VrijednostZir > 40 || BrojKartaZir > 5)
+        else if (VrijednostZir > 34 || BrojKartaZir >4)
         {
             PostaviVrijednostiAduta("Zir");
             PozvanoZir(IgracKojiTrenutnoZove);

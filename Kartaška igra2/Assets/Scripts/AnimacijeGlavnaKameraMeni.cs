@@ -9,7 +9,6 @@ public class AnimacijeGlavnaKameraMeni : MonoBehaviour
     public Button Postavke;
     public Button Natrag;
     public Button IgrajIgru;
-    // Start is called before the first frame update
     void Start()
     {
         GlavnaKamera = GetComponent<Animator>();

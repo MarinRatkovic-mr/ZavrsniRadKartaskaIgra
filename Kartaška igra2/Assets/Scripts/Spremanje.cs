@@ -5,7 +5,7 @@ using UnityEngine;
 public static class  Spremanje
 {
     /*----------*/
-    /*Statičke varijable korištene tijekom sam igre za spremanje različitih vrijednosti.*/
+    /*Statičke varijable korištene tijekom igre za spremanje različitih vrijednosti.*/
     public static int StariRezultatMi = 0; 
     public static int RezultatMi = 0;
     public static int StariRezultatVi = 0;

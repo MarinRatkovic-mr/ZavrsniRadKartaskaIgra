@@ -12,7 +12,7 @@ public class UpdateSprite : MonoBehaviour
     private Bela bela;
 
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         List<string> deck = Bela.KreirajSpil();
@@ -32,7 +32,7 @@ public class UpdateSprite : MonoBehaviour
         selectable = GetComponent<Selectable>();
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         if (selectable.KartaOkrenutaPremaGore == true)

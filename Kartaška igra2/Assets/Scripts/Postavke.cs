@@ -122,7 +122,8 @@ public class Postavke : MonoBehaviour
         PlayerPrefs.SetString("Odabrana ploca ime", OdabranaPloca.name);
         PlayerPrefs.Save();
     }
-    /*Korištenje skripte spremanje radi da spremi imena igrača radi lakšeg pristupa varijablima.*/
+    /*Korištenje skripte spremanje radi da spremi imena igrača 
+     radi lakšeg pristupa varijablima.*/
     public void SpremiPostavkeIgre()
     {
         if(Igrac1 != Igracc1.text)
@@ -167,7 +168,7 @@ public class Postavke : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         OptionsText.text = "Promjene su spremljene!";
         yield return new WaitForSecondsRealtime(2);
-        OptionsText.text = "OPTIONS";
+        OptionsText.text = "POSTAVKE";
     }
     /*Ploča u postavcima koja je odabrana mijenja boju.*/
     public void PlocaMjenjaBoju(Button GumbUKojemJeTrenutnoPostavljenaPloca)

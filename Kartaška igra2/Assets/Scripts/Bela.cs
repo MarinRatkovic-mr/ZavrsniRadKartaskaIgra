@@ -28,23 +28,18 @@ public class Bela : MonoBehaviour
     public  List<string> spil;
     
     void Start()
-    {
-        
+    {      
         OdigrajKarte();
     }
-
-    
     void Update()
     {
         
     }
 
     
-    // Metoda za prizvanje promješanog špila karata
+    // Metoda za prizivanje promješanog špila karata
     public void OdigrajKarte()
-    {
-        
-        
+    {            
         Igrac1.Clear();
         Igrac2.Clear();
         Igrac3.Clear();
@@ -56,10 +51,6 @@ public class Bela : MonoBehaviour
         PromjesajKarte(spil);        
         BelaSortiraj();       
         StartCoroutine(BelaDjeli());
-
-        
-       
-
     }
 
     //Kreiranje špila karata tako da uzmemo sve vrijednosti iz vektora "boje" i "vrijednosti"
@@ -109,7 +100,9 @@ public class Bela : MonoBehaviour
             {
              
                 yield return new WaitForSeconds(0.06f);
-                GameObject novaKarta = Instantiate(KartePrefab, new Vector3(PozicijaIgraca[i].transform.position.x - xPomak, PozicijaIgraca[i].transform.position.y - yPomak, PozicijaIgraca[i].transform.position.z + zPomak), Quaternion.Euler(0f, 0f, PozicijaIgraca[i].transform.localRotation.z + zRotacija), PozicijaIgraca[i].transform);
+                GameObject novaKarta = Instantiate(KartePrefab, new Vector3(PozicijaIgraca[i].transform.position.x - xPomak, 
+                    PozicijaIgraca[i].transform.position.y - yPomak, PozicijaIgraca[i].transform.position.z + zPomak), 
+                    Quaternion.Euler(0f, 0f, PozicijaIgraca[i].transform.localRotation.z + zRotacija), PozicijaIgraca[i].transform);
   
                 novaKarta.name = karta;
                 for (int a = 0; a < 6; a++)
