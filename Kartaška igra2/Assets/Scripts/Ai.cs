@@ -681,7 +681,7 @@ public class Ai : MonoBehaviour
            ZvanjaVi = SveukupnoZvanjaVi;
            }
         }
-        yield return new WaitForSecondsRealtime(4);
+        yield return new WaitForSecondsRealtime(3);
 
         List<GameObject> PrivremenaLista = VratiZvanjeAkoPostojiKodPojedinogIgraca(Igrac1).KarteKojeSuUZvanju;
         for (int i = 0; i < KarteKojeSeZovu.Count; i++)
